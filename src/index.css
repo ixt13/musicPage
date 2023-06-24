@@ -1,13 +1,15 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'StratosSkyEng';
+  src: local('StratosSkyEng'),
+    url('../public/fonts/example stratos font/Stratos-Regular.woff2')
+      format('woff2');
+  font-weight: 400px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: 'StratosSkyeng', sans-serif;
+  color: white;
+  box-sizing: border-box;
 }
