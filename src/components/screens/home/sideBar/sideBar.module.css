@@ -75,3 +75,17 @@
   max-width: 418px;
   padding: 20px 90px 20px 78px;
 }
+
+.skeleton {
+  background-color: gray;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,7 +1,7 @@
 import styles from './content.module.css'
 import PlayListTitle from './playListTitle/playListTitle.jsx'
 import PlayListItem from './playListItem/playListItem.jsx'
-function content() {
+function Content() {
   return (
     <div className={styles.centerblock__content}>
       <PlayListTitle></PlayListTitle>
@@ -12,4 +12,4 @@ function content() {
   )
 }
 
-export default content
+export default Content

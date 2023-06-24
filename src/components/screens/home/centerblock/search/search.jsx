@@ -1,6 +1,6 @@
 import styles from './search.module.css'
 
-function search() {
+function Search() {
   return (
     <div className={styles.centerblock__search}>
       <svg className={styles.search__svg}>
@@ -15,4 +15,4 @@ function search() {
     </div>
   )
 }
-export default search
+export default Search
