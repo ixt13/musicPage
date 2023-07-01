@@ -1,4 +1,5 @@
 import styles from './bar.module.css'
+import iconPause from '../../../../assets/icon/pause.svg'
 import iconPrev from '../../../../assets/icon/prev.svg'
 import iconPlay from '../../../../assets/icon/play.svg'
 import iconNext from '../../../../assets/icon/next.svg'
@@ -8,9 +9,29 @@ import iconNote from '../../../../assets/icon/note.svg'
 import iconLike from '../../../../assets/icon/like.svg'
 import iconDislike from '../../../../assets/icon/dislike.svg'
 import iconVolume from '../../../../assets/icon/volume.svg'
-import { useEffect, useState } from 'react'
+import track from '../../../../assets/Bobby_Marleni_-_Dropin.mp3'
+import { useEffect, useState, useRef } from 'react'
 function Bar() {
   const [showSkeleton, setShowSkeleton] = useState(true)
+  const [isPlaying, setPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const audioRef = useRef(null)
+
+  const handleStop = () => {
+    audioRef.current.pause()
+  }
+
+  const handleStart = () => {
+    audioRef.current.play()
+  }
+
+  const handleTimeUpdate = () => {
+    const currentTime = audioRef.current.currentTime
+    const duration = audioRef.current.duration
+    const progressPercent = (currentTime / duration) * 100
+    setProgress(progressPercent)
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false)
@@ -122,10 +143,23 @@ function Bar() {
       </div>
     )
   }
+
   return (
     <div className={styles.bar}>
+      <audio
+        ref={audioRef}
+        src={track}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onTimeUpdate={handleTimeUpdate}
+      />
       <div className={styles.bar__content}>
-        <div className={styles.bar__player_progress}></div>
+        <div className={styles.bar__player_progress}>
+          <div
+            className={styles.barProgress}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
         <div className={styles.bar__player_block}>
           <div className={styles.bar__player}>
             <div className={styles.player__controls}>
@@ -136,10 +170,13 @@ function Bar() {
                   alt="prev"
                 />
               </div>
-              <div className={`${styles.player__btn_play} ${styles._btn}`}>
+              <div
+                className={`${styles.player__btn_play} ${styles._btn}`}
+                onClick={isPlaying ? handleStop : handleStart}
+              >
                 <img
                   className={styles.player__btn_play_svg}
-                  src={iconPlay}
+                  src={isPlaying ? iconPause : iconPlay}
                   alt="play"
                 />
               </div>
