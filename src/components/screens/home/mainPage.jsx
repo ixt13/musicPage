@@ -6,26 +6,26 @@ import CenterBlockContent from './centerblock/content/content.jsx'
 import PlayListTitle from './centerblock/content/playListTitle/playListTitle'
 import Bar from './bar/bar.jsx'
 import Sidebar from './sideBar/sideBar.jsx'
-function mainPage() {
+function MainPage() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <main className={styles.main}>
-          <NavMenu></NavMenu>
+          <NavMenu />
           <div className={styles.centerblock}>
-            <CenterBlockSearch></CenterBlockSearch>
+            <CenterBlockSearch />
             <div className={styles.centerblock__h2}>Треки</div>
-            <CenterBlockFilter></CenterBlockFilter>
+            <CenterBlockFilter />
             <CenterBlockContent>
-              <PlayListTitle></PlayListTitle>
+              <PlayListTitle />
             </CenterBlockContent>
           </div>
-          <Sidebar></Sidebar>
+          <Sidebar />
         </main>
-        <Bar></Bar>
+        <Bar />
       </div>
     </div>
   )
 }
 
-export default mainPage
+export default MainPage

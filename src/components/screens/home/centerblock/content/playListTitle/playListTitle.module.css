@@ -48,3 +48,17 @@
   fill: transparent;
   stroke: #696969;
 }
+
+.skeleton {
+  background-color: gray;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}

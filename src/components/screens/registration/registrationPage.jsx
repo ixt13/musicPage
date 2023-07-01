@@ -1,4 +1,4 @@
-import logo from '../../../img/logo.svg'
+import logo from '../../../assets/logo.png'
 import Styles from '../log-in/LogRegPages.module.css'
 function regForm() {
   return (

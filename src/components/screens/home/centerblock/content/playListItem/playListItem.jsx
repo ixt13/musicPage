@@ -1,7 +1,52 @@
 import styles from './playListItem.module.css'
-import iconLike from './like.svg'
-import iconTrack from './note.svg'
-function playListItem() {
+import iconLike from '../../../../../../assets/icon/like.svg'
+import iconTrack from '../../../../../../assets/icon/note.svg'
+import { useState, useEffect } from 'react'
+
+function PlayListItem() {
+  const [showSkeleton, setShowSkeleton] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (showSkeleton) {
+    return (
+      <div className={styles.playlist__item}>
+        <div className={styles.skeletonPositions}>
+          <div className={styles.track__title}>
+            <div
+              className={`${styles.track__title_image} ${styles.skeleton}`}
+            ></div>
+            <div
+              className={styles.skeleton}
+              style={{ width: '356px', height: '20px' }}
+            >
+              <a className={styles.track__title_link} href="#"></a>
+            </div>
+          </div>
+
+          <div
+            className={`${styles.track__author}  ${styles.skeleton} `}
+            style={{ width: '322px', height: '20px' }}
+          >
+            <a className={styles.track__author_link} href="#"></a>
+          </div>
+          <div
+            className={`${styles.track__album} ${styles.skeleton}`}
+            style={{ width: '246px', height: '20px' }}
+          >
+            <a className={styles.track__album_link} href="#"></a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.playlist__item}>
       <div className={styles.playlist__track}>
@@ -34,4 +79,4 @@ function playListItem() {
     </div>
   )
 }
-export default playListItem
+export default PlayListItem

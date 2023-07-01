@@ -38,7 +38,7 @@
 }
 .nav__menu {
   display: block;
-  visibility: visible;
+  visibility: hidden;
 }
 .menu__list {
   padding: 18px 0 10px 0;
@@ -54,5 +54,21 @@ a,
 a:visited {
   text-decoration: none;
   font-family: 'StratosSkyEng', sans-serif;
+  cursor: pointer;
+}
+
+._btn {
+  cursor: pointer;
+}
+
+._btn_text:hover {
+  border-color: #d9b6ff;
+  color: #d9b6ff;
+  cursor: pointer;
+}
+
+._btn_text:active {
+  border-color: #ad61ff;
+  color: #ad61ff;
   cursor: pointer;
 }
