@@ -72,3 +72,12 @@ a:visited {
   color: #ad61ff;
   cursor: pointer;
 }
+
+.navLink {
+  color: white;
+}
+
+.activeNavLink {
+  border-color: #ad61ff;
+  color: #ad61ff;
+}

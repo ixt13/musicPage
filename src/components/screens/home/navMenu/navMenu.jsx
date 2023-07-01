@@ -1,4 +1,6 @@
+import { NavLink } from 'react-router-dom'
 import styles from './navMenu.module.css'
+import cn from 'classnames'
 
 function NavMenu() {
   function showHide() {
@@ -22,19 +24,34 @@ function NavMenu() {
       <div id="burger" className={styles.nav__menu}>
         <ul className={styles.menu__list}>
           <li className={styles.menu__item}>
-            <a href="#" className={styles._btn_text}>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                cn(styles._btn_text, { [styles.activeNavLink]: isActive })
+              }
+            >
               Главная
-            </a>
+            </NavLink>
           </li>
           <li className={styles.menu__item}>
-            <a href="#" className={styles._btn_text}>
+            <NavLink
+              to="/myTracks"
+              className={({ isActive }) =>
+                cn(styles._btn_text, { [styles.activeNavLink]: isActive })
+              }
+            >
               Мой плейлист
-            </a>
+            </NavLink>
           </li>
           <li className={styles.menu__item}>
-            <a href="#" className={styles._btn_text}>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                cn(styles._btn_text, { [styles.activeNavLink]: isActive })
+              }
+            >
               Войти
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>

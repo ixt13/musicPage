@@ -20,7 +20,7 @@ function MainPage() {
               <PlayListTitle />
             </CenterBlockContent>
           </div>
-          <Sidebar />
+          <Sidebar showImages={true} />
         </main>
         <Bar />
       </div>
