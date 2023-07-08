@@ -1,0 +1,13 @@
+.h1 {
+  display: flex;
+  color: black;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+  margin-top: 30vh;
+}
+
+.page {
+  height: 100vh;
+  width: auto;
+}
