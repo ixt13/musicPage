@@ -324,3 +324,8 @@ button,
     opacity: 1;
   }
 }
+
+.barProgress {
+  height: 4px;
+  background-color: #d9d9d9;
+}
