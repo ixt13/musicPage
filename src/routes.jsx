@@ -5,7 +5,7 @@ import RegistrationPage from './components/screens/registration/registrationPage
 import MyTracks from './components/screens/myTracks/myTracks'
 import Collections from './components/screens/collections/collections'
 import NotFound from './components/screens/notFound/notFound'
-import ProtectedRoute from './protectedRoutes'
+import ProtectedRoute from './components/protectedRoutes'
 const AppRoutes = ({ token }) => {
   return (
     <Routes>
