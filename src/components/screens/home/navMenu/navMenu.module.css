@@ -1,8 +1,16 @@
 .main__nav {
   width: 244px;
-  background-color: #181818;
   padding: 20px 0 20px 36px;
 }
+
+.main__nav_Light {
+  background-color: #f6f5f3;
+}
+
+.main__nav_Dark {
+  background-color: #232323;
+}
+
 .nav__logo {
   width: 113.33px;
   height: 43px;
@@ -34,8 +42,12 @@
   display: inline-block;
   width: 100%;
   height: 1px;
-  background-color: #d3d3d3;
 }
+
+.burger__line2 {
+  background-color: black;
+}
+
 .nav__menu {
   display: block;
   visibility: hidden;
@@ -75,6 +87,24 @@ a:visited {
 
 .navLink {
   color: white;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+}
+.icon:hover {
+  cursor: pointer;
+}
+
+.light {
+  color: black;
+  background-color: #f6f5f3;
+}
+
+.dark {
+  color: white;
+  background-color: #232323;
 }
 
 .activeNavLink {

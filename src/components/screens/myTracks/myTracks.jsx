@@ -5,10 +5,17 @@ import Bar from '../home/bar/bar'
 import CenterBlockContent from '../home/centerblock/content/content'
 import PlayListTitle from '../home/centerblock/content/playListTitle/playListTitle'
 import Sidebar from '../home/sideBar/sideBar'
+import { useContext } from 'react'
+import { ThemeContext } from '../ThemeProvider/ThemeProvider'
 function MyTracks() {
+  const { theme } = useContext(ThemeContext)
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
+    <div
+      className={`${styles.wrapper} ${
+        theme === 'dark' ? styles.wrapperDark : styles.wrapperLight
+      }`}
+    >
+      <div className={`${styles.container}  ${styles[theme]}`}>
         <main className={styles.main}>
           <NavMenu />
           <div className={styles.centerblock}>

@@ -5,10 +5,10 @@
   z-index: 1;
   width: 248px;
   height: 305px;
-  background: #313131;
   border-radius: 12px;
   flex-direction: column;
   margin-top: 40px;
+  border: 1px solid #313131;
 }
 
 .filter_box {
@@ -38,4 +38,14 @@
 .listItem:active {
   text-decoration: underline;
   color: #b672ff;
+}
+
+.light {
+  background: #f6f5f3;
+  color: black;
+}
+
+.dark {
+  background: #313131;
+  color: white;
 }

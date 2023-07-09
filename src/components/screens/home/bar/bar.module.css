@@ -19,7 +19,13 @@
 .bar__player_progress {
   width: 100%;
   height: 5px;
+}
+
+.bar__player_progress_dark {
   background: #2e2e2e;
+}
+.bar__player_progress_light {
+  background: #d9d9d9;
 }
 
 .bar__player_block {
@@ -191,8 +197,8 @@
 }
 
 .track_play__svg {
-  width: 18px;
-  height: 17px;
+  width: 52px;
+  height: 52px;
   fill: transparent;
   stroke: #4e4e4e;
 }
@@ -328,4 +334,14 @@ button,
 .barProgress {
   height: 4px;
   background-color: #d9d9d9;
+}
+
+.light {
+  background: white;
+  color: black;
+}
+
+.dark {
+  background: #1c1c1c;
+  color: white;
 }

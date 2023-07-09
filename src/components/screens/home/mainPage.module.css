@@ -6,12 +6,20 @@
   height: 100vh;
 }
 
+.wrapperLight {
+  background-color: #fff5ee;
+}
+
+.wrapperDark {
+  background-color: #383838;
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
   max-width: 1920px;
-  height: 100vh;
   margin: 0 auto;
   position: relative;
-  background-color: #181818;
   zoom: 0.75;
   height: 100%;
 }
@@ -60,4 +68,14 @@
   line-height: 72px;
   letter-spacing: -0.8px;
   margin-bottom: 45px;
+}
+
+.light {
+  color: black;
+  background-color: white;
+}
+
+.dark {
+  color: white;
+  background-color: #1c1c1c;
 }

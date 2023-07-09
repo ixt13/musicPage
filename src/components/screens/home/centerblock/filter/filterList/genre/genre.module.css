@@ -1,6 +1,6 @@
 .filter {
   display: flex;
-
+  border: 1px solid #313131;
   position: absolute;
   z-index: 1;
   width: 248px;
@@ -38,4 +38,14 @@
 .listItem:active {
   text-decoration: underline;
   color: #b672ff;
+}
+
+.light {
+  background: #f6f5f3;
+  color: black;
+}
+
+.dark {
+  background: #313131;
+  color: white;
 }

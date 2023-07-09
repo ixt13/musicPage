@@ -1,7 +1,11 @@
 import { NavLink } from 'react-router-dom'
 import styles from './sideBar.module.css'
 import { useEffect, useState } from 'react'
+import { useContext } from 'react'
+import { ThemeContext } from '../../ThemeProvider/ThemeProvider'
+
 function Sidebar(props) {
+  const { theme } = useContext(ThemeContext)
   const [showSkeleton, setShowSkeleton] = useState(true)
 
   useEffect(() => {
@@ -44,7 +48,9 @@ function Sidebar(props) {
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
-        <p className={styles.sidebar__personal_name}>Sergey.Ivanov</p>
+        <p className={`${styles.sidebar__personal_name} ${styles[theme]}`}>
+          Sergey.Ivanov
+        </p>
         <div className={styles.sidebar__avatar}></div>
       </div>
       <div className={styles.sidebar__block}>
