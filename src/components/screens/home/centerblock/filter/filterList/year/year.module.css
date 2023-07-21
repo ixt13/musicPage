@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  border: 1px solid #313131;
   gap: 14px;
 
   position: absolute;
@@ -35,8 +35,6 @@
   /* identical to box height, or 120% */
 
   font-feature-settings: 'pnum' on, 'lnum' on;
-
-  color: #ffffff;
 }
 .input:hover {
   text-decoration: underline;
@@ -61,4 +59,14 @@ input[type='radio']:checked:after {
   display: inline-block;
   visibility: visible;
   border: 2px solid white;
+}
+
+.light {
+  background: #f6f5f3;
+  color: black;
+}
+
+.dark {
+  background: #313131;
+  color: white;
 }

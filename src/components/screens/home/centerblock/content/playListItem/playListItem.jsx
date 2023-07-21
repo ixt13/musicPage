@@ -1,9 +1,14 @@
 import styles from './playListItem.module.css'
 import iconLike from '../../../../../../assets/icon/like.svg'
-import iconTrack from '../../../../../../assets/icon/note.svg'
+import iconTrack from '../../../../../../assets/icon/trackDarkIcon.svg'
+import lightTrackIcon from '../../../../../../assets/icon/lightTrackIcon.svg'
 import { useState, useEffect } from 'react'
+import { ThemeContext } from '../../../../ThemeProvider/ThemeProvider'
+import { useContext } from 'react'
 
 function PlayListItem() {
+  const { theme } = useContext(ThemeContext)
+
   const [showSkeleton, setShowSkeleton] = useState(true)
 
   useEffect(() => {
@@ -52,17 +57,27 @@ function PlayListItem() {
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__title_image}>
-            <img className={styles.track__title_svg} src={iconTrack} alt="#" />
+            <img
+              className={styles.track__title_svg}
+              src={theme === 'dark' ? iconTrack : lightTrackIcon}
+              alt="#"
+            />
           </div>
           <div className={styles.track__title_text}>
-            <a className={styles.track__title_link} href="#">
+            <a
+              className={`${styles.track__title_link} ${styles[theme]}`}
+              href="#"
+            >
               xxxxx
             </a>
           </div>
         </div>
 
         <div className={styles.track__author}>
-          <a className={styles.track__author_link} href="#">
+          <a
+            className={`${styles.track__author_link} ${styles[theme]}`}
+            href="#"
+          >
             xxxx
           </a>
         </div>

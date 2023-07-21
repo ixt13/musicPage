@@ -3,8 +3,11 @@ import { useState } from 'react'
 import FilterArtist from './filterList/artist/artist'
 import FilterYear from './filterList/year/year'
 import FilterGenre from './filterList/genre/genre'
+import { useContext } from 'react'
+import { ThemeContext } from '../../../ThemeProvider/ThemeProvider'
 
 function Filter() {
+  const { theme } = useContext(ThemeContext)
   const [showActiveClass, setshowActiveClass] = useState(null)
   const [showArtistFilter, setShowArtistFilter] = useState(false)
   const [showYearFilter, setShowYearFilter] = useState(false)
@@ -26,12 +29,18 @@ function Filter() {
 
   return (
     <div className={styles.centerblock__filter}>
-      <div className={styles.filter__title}>Искать по:</div>
+      <div
+        className={`${styles.filter__title} ${
+          theme === 'dark' ? styles.colorWhite : styles.colorBlack
+        }`}
+      >
+        Искать по:
+      </div>
       <div className={styles.filter_set}>
         <div
           className={`${styles.filter__button} ${styles._btn_text} ${
-            showActiveClass === 'artist' ? styles.btn_active : ''
-          }`}
+            styles[theme]
+          } ${showActiveClass === 'artist' ? styles.btn_active : ''}`}
           onClick={() => handleFilterClick('artist')}
         >
           исполнителю
@@ -40,9 +49,9 @@ function Filter() {
       </div>
       <div className={styles.filter_set}>
         <div
-          className={`${styles.filter__button}  ${styles._btn_text} ${
-            showActiveClass === 'year' ? styles.btn_active : ''
-          }`}
+          className={`${styles.filter__button} ${styles[theme]}  ${
+            styles._btn_text
+          } ${showActiveClass === 'year' ? styles.btn_active : ''}`}
           onClick={() => handleFilterClick('year')}
         >
           году выпуска
@@ -51,9 +60,9 @@ function Filter() {
       </div>
       <div className={styles.filter_set}>
         <div
-          className={`${styles.filter__button}  ${styles._btn_text} ${
-            showActiveClass === 'genre' ? styles.btn_active : ''
-          }`}
+          className={`${styles.filter__button} ${styles[theme]}  ${
+            styles._btn_text
+          } ${showActiveClass === 'genre' ? styles.btn_active : ''}`}
           onClick={() => handleFilterClick('genre')}
         >
           жанру

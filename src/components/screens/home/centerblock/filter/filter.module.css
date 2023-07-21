@@ -33,7 +33,6 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
 }
@@ -52,4 +51,24 @@
 .btn_active {
   border-color: #ad61ff;
   color: #ad61ff;
+}
+
+.light {
+  color: black;
+  background-color: #f6f5f3;
+  border: 1px solid black;
+}
+
+.dark {
+  color: white;
+  background-color: #1c1c1c;
+  border: 1px solid #ffffff;
+}
+
+.colorWhite {
+  color: white;
+}
+
+.colorBlack {
+  color: black;
 }
