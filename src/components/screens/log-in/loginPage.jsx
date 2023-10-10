@@ -1,29 +1,88 @@
 import logo from '../../../assets/logo.svg'
 import styles from './LogRegPages.module.css'
 import { Link } from 'react-router-dom'
-import Cookies from 'js-cookie'
 
+import axios from 'axios'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setUserData } from '../../../redux/slicers/userLogData'
 function loginForm() {
-  const authButton = (event) => {
-    event.preventDefault()
-    Cookies.set('token', 'Authentified')
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [userLogin, setUserLogin] = useState('')
+  const [userPassword, setUserPassword] = useState('')
+  const data = {
+    email: userLogin,
+    password: userPassword,
+  }
 
-    console.log(Cookies.get('token'))
+  function getToken() {
+    axios
+      .post(`https://skypro-music-api.skyeng.tech/user/token/`, data, {
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response.data.access)
+        localStorage.setItem('token', response.data.access)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  function handleLogin() {
+    if (userLogin.length && userPassword.length) {
+      axios
+        .post('https://skypro-music-api.skyeng.tech/user/login/', data, {
+          headers: {
+            'content-type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.data.id) {
+            dispatch(setUserData(response.data))
+            getToken()
+            navigate('/')
+            localStorage.setItem('login', userLogin)
+            localStorage.setItem('password', userPassword)
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
+    return
   }
   return (
     <div className={styles.login_form}>
-      <form className={styles.form} action="">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+        }}
+        className={styles.form}
+        action="submit"
+      >
         <img className={styles.login_logo} src={logo} alt="logo" />
         <div className={styles.login_inputs}>
           <input
+            onChange={(e) => {
+              setUserLogin(e.target.value)
+            }}
             className={styles.login_form_input_style}
+            name="login"
             type="text"
             placeholder="Логин"
             autoComplete="current-login"
           ></input>
 
           <input
+            onChange={(e) => {
+              setUserPassword(e.target.value)
+            }}
             className={styles.login_form_input_style}
+            name="password"
             type="password"
             placeholder="Пароль"
             autoComplete="current-password"
@@ -31,7 +90,12 @@ function loginForm() {
         </div>
 
         <div className={styles.login_buttons}>
-          <button className={styles.login_login_button} onClick={authButton}>
+          <button
+            onClick={() => {
+              handleLogin()
+            }}
+            className={styles.login_login_button}
+          >
             Войти
           </button>
           <button className={styles.login_reg_button}>

@@ -6,7 +6,7 @@ import FilterGenre from './filterList/genre/genre'
 import { useContext } from 'react'
 import { ThemeContext } from '../../../ThemeProvider/ThemeProvider'
 
-function Filter() {
+function Filter(props) {
   const { theme } = useContext(ThemeContext)
   const [showActiveClass, setshowActiveClass] = useState(null)
   const [showArtistFilter, setShowArtistFilter] = useState(false)
@@ -41,11 +41,16 @@ function Filter() {
           className={`${styles.filter__button} ${styles._btn_text} ${
             styles[theme]
           } ${showActiveClass === 'artist' ? styles.btn_active : ''}`}
-          onClick={() => handleFilterClick('artist')}
+          onClick={() => {
+            handleFilterClick('artist')
+          }}
         >
           исполнителю
         </div>
-        {showArtistFilter && <FilterArtist />}
+
+        {showArtistFilter && (
+          <FilterArtist filter={props.artistFilter} page={props.selectedPage} />
+        )}
       </div>
       <div className={styles.filter_set}>
         <div
@@ -56,7 +61,9 @@ function Filter() {
         >
           году выпуска
         </div>
-        {showYearFilter && <FilterYear />}
+        {showYearFilter && (
+          <FilterYear page={props.selectedPage} filter={props.yearFilter} />
+        )}
       </div>
       <div className={styles.filter_set}>
         <div
@@ -69,6 +76,16 @@ function Filter() {
         </div>
         {showGenreFilter && <FilterGenre />}
       </div>
+      <button
+        className={`${styles.filter__button} ${styles[theme]}  ${
+          styles._btn_text
+        } ${showActiveClass === 'genre' ? styles.btn_active : ''}`}
+        onClick={() => {
+          props.reset()
+        }}
+      >
+        Reset Filters
+      </button>
     </div>
   )
 }
