@@ -3,54 +3,15 @@ import styles from './sideBar.module.css'
 import { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { ThemeContext } from '../../ThemeProvider/ThemeProvider'
-
+import { useSelector } from 'react-redux'
 function Sidebar(props) {
   const { theme } = useContext(ThemeContext)
   const [showSkeleton, setShowSkeleton] = useState(true)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkeleton(false)
-    }, 5000)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (showSkeleton) {
-    return (
-      <div className={styles.main__sidebar}>
-        <div className={styles.sidebar__personal}>
-          <p className={styles.sidebar__personal_name}>Sergey.Ivanov</p>
-          <div className={styles.sidebar__avatar}></div>
-        </div>
-        <div className={styles.sidebar__block}>
-          {props.showImages && (
-            <div className={styles.sidebar__list}>
-              <div
-                className={`${styles.sidebar__item} ${styles.skeleton} `}
-                style={{ height: '150px', width: '250px' }}
-              ></div>
-              <div
-                className={`${styles.sidebar__item} ${styles.skeleton} `}
-                style={{ height: '150px', width: '250px' }}
-              ></div>
-              <div
-                className={`${styles.sidebar__item} ${styles.skeleton} `}
-                style={{ height: '150px', width: '250px' }}
-              ></div>
-            </div>
-          )}
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
-        <p className={`${styles.sidebar__personal_name} ${styles[theme]}`}>
-          Sergey.Ivanov
-        </p>
+        <p className={`${styles.sidebar__personal_name} ${styles[theme]}`}></p>
         <div className={styles.sidebar__avatar}></div>
       </div>
       <div className={styles.sidebar__block}>

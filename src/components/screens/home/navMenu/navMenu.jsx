@@ -16,7 +16,6 @@ function NavMenu() {
     burgerMenu.classList.toggle(styles.nav__menu)
   }
 
-  console.log(theme)
   return (
     <nav
       className={`${styles.main__nav} ${

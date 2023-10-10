@@ -9,7 +9,7 @@
 }
 
 .bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -17,6 +17,7 @@
 }
 
 .bar__player_progress {
+  position: relative;
   width: 100%;
   height: 5px;
 }
@@ -171,7 +172,7 @@
 }
 
 .track_play__contain {
-  width: auto;
+  width: 200px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: auto 1fr;
@@ -193,7 +194,7 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-left: 26%;
+  margin-left: 40px;
 }
 
 .track_play__svg {
@@ -333,7 +334,9 @@ button,
 
 .barProgress {
   height: 4px;
-  background-color: #d9d9d9;
+
+  z-index: 2;
+  position: absolute;
 }
 
 .light {
@@ -344,4 +347,12 @@ button,
 .dark {
   background: #1c1c1c;
   color: white;
+}
+
+.bufferedProgressBar {
+  z-index: 1;
+  position: absolute;
+  height: 4px;
+  top: 0px;
+  background-color: gray;
 }

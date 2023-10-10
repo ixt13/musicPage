@@ -3,7 +3,6 @@
   min-height: 100%;
   overflow: hidden;
   background-color: #383838;
-  height: 100vh;
 }
 
 .wrapperLight {
@@ -21,7 +20,7 @@
   margin: 0 auto;
   position: relative;
   zoom: 0.75;
-  height: 100%;
+  min-height: 132vh;
 }
 
 .main__centerblock {
@@ -39,14 +38,13 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
 .centerblock {
-  width: auto;
+  width: 1107px;
   -webkit-box-flex: 3;
   -ms-flex-positive: 3;
   flex-grow: 3;
@@ -78,4 +76,7 @@
 .dark {
   color: white;
   background-color: #1c1c1c;
+}
+.centerblock__content {
+  padding-bottom: 50px;
 }
