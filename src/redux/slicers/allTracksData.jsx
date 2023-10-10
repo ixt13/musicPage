@@ -78,7 +78,6 @@ export const {
   setnextTrack,
   setPrevTrack,
   setSelectedPage,
-
   setAuthorFilter,
 } = allTrackSlicer.actions
 export default allTrackSlicer.reducer
