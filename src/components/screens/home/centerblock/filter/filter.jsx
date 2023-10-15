@@ -74,7 +74,9 @@ function Filter(props) {
         >
           жанру
         </div>
-        {showGenreFilter && <FilterGenre />}
+        {showGenreFilter && (
+          <FilterGenre page={props.selectedPage} filter={props.genreFilter} />
+        )}
       </div>
       <button
         className={`${styles.filter__button} ${styles[theme]}  ${

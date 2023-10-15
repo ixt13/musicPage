@@ -10,8 +10,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedPage } from '../../../../../../redux/slicers/allTracksData'
 import playGif from '../../../../../../assets/music-disc.gif'
 import axios from 'axios'
-
+import { useNavigate } from 'react-router-dom'
+import { setShowBar } from '../../../../../../redux/slicers/showBarSlicer'
 function PlayListItem(props) {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [trackTime, setTrackTime] = useState(0)
   const [showPlayGif, setShowPlayGif] = useState(false)
@@ -55,12 +57,14 @@ function PlayListItem(props) {
         }
 
         if (response && props.page === 'myTracks' && method === 'delete') {
-          props.updateFavs()
           props.updateTracks()
+          props.updateFavs()
         }
       })
       .catch((error) => {
         console.log(error)
+        navigate('/login')
+        localStorage.removeItem('username')
       })
   }
   useEffect(() => {
@@ -83,6 +87,7 @@ function PlayListItem(props) {
           onClick={() => {
             props.setLinkTrack(props.url)
             dispatch(setSelectedPage(props.page))
+            dispatch(setShowBar(true))
           }}
           className={styles.track__title}
         >

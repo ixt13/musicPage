@@ -1,6 +1,6 @@
 import styles from './playListTitle.module.css'
 import iconWatch from '../../../../../../assets/icon/watch.svg'
-import { useState, useEffect } from 'react'
+
 function PlayListTitle() {
   return (
     <div className={styles.content__title}>

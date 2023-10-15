@@ -3,12 +3,20 @@ const initialState = {
   mainPageTracks: [],
   favPageTracks: [],
   selectedTrackData: [],
-  selectedPage: '',
+  selectedPage: 'main',
+  renderFavTracksData: [],
+  renderMainPageTracksData: [],
 }
 const allTrackSlicer = createSlice({
   name: 'allTracks',
   initialState,
   reducers: {
+    setRenderMainPageTracks: (state, action) => {
+      return { ...state, renderMainPageTracksData: action.payload }
+    },
+    setRenderFavTracksData: (state, action) => {
+      return { ...state, renderFavTracksData: action.payload }
+    },
     setMainPageTracks: (state, action) => {
       return { ...state, mainPageTracks: action.payload }
     },
@@ -22,16 +30,31 @@ const allTrackSlicer = createSlice({
 
       return { ...state, selectedTrackData: selectedTrack }
     },
-    setnextTrack: (state) => {
+    setnextTrack: (state, action) => {
       let playlist = ''
       if (state.selectedPage === 'main') {
         playlist = state.mainPageTracks
       } else {
         playlist = state.favPageTracks
       }
+
       const indexState = playlist.findIndex(
         (el) => el.track_file === state.selectedTrackData.track_file
       )
+      console.log(action.payload)
+      // Если флаг shuffle установлен, перемешиваем треки
+      if (action.payload === true) {
+        const shuffledPlaylist = [...playlist]
+        for (let i = shuffledPlaylist.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1))
+          ;[shuffledPlaylist[i], shuffledPlaylist[j]] = [
+            shuffledPlaylist[j],
+            shuffledPlaylist[i],
+          ]
+        }
+        return { ...state, selectedTrackData: shuffledPlaylist[0] }
+      }
+
       const indexedTrackElement = playlist[indexState + 1]
       if (indexedTrackElement) {
         return { ...state, selectedTrackData: indexedTrackElement }
@@ -79,5 +102,7 @@ export const {
   setPrevTrack,
   setSelectedPage,
   setAuthorFilter,
+  setRenderMainPageTracks,
+  setRenderFavTracksData,
 } = allTrackSlicer.actions
 export default allTrackSlicer.reducer

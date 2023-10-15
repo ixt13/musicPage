@@ -9,6 +9,7 @@ import whiteLogo from '../../../../assets/logo.png'
 import blackLogo from '../../../../assets/logo.svg'
 
 function NavMenu() {
+  const logged = localStorage.getItem('username')
   const { theme, toggleTheme } = useContext(ThemeContext)
 
   function showHide() {
@@ -75,7 +76,13 @@ function NavMenu() {
               Мой плейлист
             </NavLink>
           </li>
-          <li className={styles.menu__item}>
+          <li
+            onClick={() => {
+              if (logged !== '') localStorage.removeItem('username')
+              localStorage.removeItem('token')
+            }}
+            className={styles.menu__item}
+          >
             <NavLink
               to="/login"
               className={({ isActive }) =>
@@ -84,7 +91,7 @@ function NavMenu() {
                 })
               }
             >
-              Войти
+              {logged ? 'Выйти' : 'Войти'}
             </NavLink>
           </li>
         </ul>
