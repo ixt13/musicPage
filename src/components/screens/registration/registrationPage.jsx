@@ -67,7 +67,7 @@ function regForm() {
           'content-type': 'application/json',
         },
       })
-      .then((response) => {
+      .then(() => {
         notify('success', 'Успешная регистрация')
         setTimeout(() => {
           navigate('/login')

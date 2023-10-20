@@ -10,12 +10,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedPage } from '../../../../../../redux/slicers/allTracksData'
 import playGif from '../../../../../../assets/music-disc.gif'
 import axios from 'axios'
-
+import { useNavigate } from 'react-router-dom'
+import { setShowBar } from '../../../../../../redux/slicers/showBarSlicer'
 function PlayListItem(props) {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [trackTime, setTrackTime] = useState(0)
   const [showPlayGif, setShowPlayGif] = useState(false)
   const trackData = useSelector((state) => state.allTracks.selectedTrackData)
+
   function formatDuration(durationInSeconds) {
     const minutes = Math.floor(durationInSeconds / 60)
     const seconds = durationInSeconds % 60
@@ -43,24 +46,21 @@ function PlayListItem(props) {
     } else if (method === 'delete') {
       requestOptions.method = 'delete'
     }
-
+    function getFromStringCompilationId(string) {
+      return string.slice(-1)
+    }
     axios(requestOptions)
       .then((response) => {
-        if (response && props.page === 'main' && method === 'post') {
-          props.updateTracks()
-          props.updateFavs()
-        } else if (response && props.page === 'main' && method === 'delete') {
-          props.updateTracks()
-          props.updateFavs()
-        }
-
-        if (response && props.page === 'myTracks' && method === 'delete') {
-          props.updateFavs()
-          props.updateTracks()
+        props.updateTracks()
+        props.updateFavs()
+        if (props.page !== 'main' && props.page !== 'myTracks') {
+          props.updateCompilTracks(getFromStringCompilationId(props.page))
         }
       })
       .catch((error) => {
         console.log(error)
+        navigate('/login')
+        localStorage.removeItem('username')
       })
   }
   useEffect(() => {
@@ -83,6 +83,7 @@ function PlayListItem(props) {
           onClick={() => {
             props.setLinkTrack(props.url)
             dispatch(setSelectedPage(props.page))
+            dispatch(setShowBar(true))
           }}
           className={styles.track__title}
         >

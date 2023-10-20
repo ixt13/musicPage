@@ -42,11 +42,15 @@ function loginForm() {
         })
         .then((response) => {
           if (response.data.id) {
-            dispatch(setUserData(response.data))
-            getToken()
-            navigate('/')
+            localStorage.setItem('username', response.data.username)
             localStorage.setItem('login', userLogin)
             localStorage.setItem('password', userPassword)
+            console.log(response)
+
+            dispatch(setUserData(response.data))
+            getToken()
+
+            navigate('/')
           }
         })
         .catch((error) => {
