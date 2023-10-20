@@ -9,6 +9,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<MainPage page="main" />} />
+      <Route path="/compilation1" element={<MainPage page="compilation1" />} />
+      <Route path="/compilation2" element={<MainPage page="compilation2" />} />
+      <Route path="/compilation3" element={<MainPage page="compilation3" />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
       <Route

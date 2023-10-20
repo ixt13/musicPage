@@ -5,7 +5,7 @@ import FilterYear from './filterList/year/year'
 import FilterGenre from './filterList/genre/genre'
 import { useContext } from 'react'
 import { ThemeContext } from '../../../ThemeProvider/ThemeProvider'
-
+import axios from 'axios'
 function Filter(props) {
   const { theme } = useContext(ThemeContext)
   const [showActiveClass, setshowActiveClass] = useState(null)

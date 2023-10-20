@@ -9,10 +9,12 @@ import icnonShuffleActive from '../../../../assets/icon/Group 18546.svg'
 import iconNote from '../../../../assets/icon/trackDarkIcon.svg'
 import iconLike from '../../../../assets/icon/like.svg'
 import volumeIconLight from '../../../../assets/icon/volumeLight.svg'
-import iconDislike from '../../../../assets/icon/dislike.svg'
+import iconDislike from '../../../../assets/icon/Vector 15.png'
 import iconVolume from '../../../../assets/icon/volume.svg'
 import trackIconLight from '../../../../assets/icon/lightTrackIcon.svg'
 import isRepeatActiveIcon from '../../../../assets/icon/Group 18545.svg'
+import { useState } from 'react'
+import { setIsliked } from '../../../../redux/slicers/allTracksData'
 import {
   setnextTrack,
   setPrevTrack,
@@ -31,9 +33,10 @@ import {
   setBufferedProgress,
   setRepeat,
 } from '../../../../redux/slicers/showBarSlicer'
-
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { memo } from 'react'
-function Bar() {
+function Bar(props) {
   const isShowBar = useSelector((state) => state.bar.showBar)
   const shuffled = useSelector((state) => state.bar.isShuffled)
   const plaiyng = useSelector((state) => state.bar.isPlaying)
@@ -44,7 +47,7 @@ function Bar() {
     (state) => state.bar.bufferedProgress
   )
   const isRepeat = useSelector((state) => state.bar.repeat)
-
+  const navigate = useNavigate()
   const memoShuffled = useMemo(() => shuffled, [shuffled])
   const memoPlaying = useMemo(() => plaiyng, [plaiyng])
   const memoProgressBar = useMemo(() => progressBar, [progressBar])
@@ -54,22 +57,24 @@ function Bar() {
     () => bufferedProgressValue,
     [bufferedProgressValue]
   )
-  useEffect(() => {
-    console.log(
-      memoShuffled,
-      memoProgressBar,
-      memoMaxDuration,
-      memoVolume,
-      memoPlaying,
-      memoBufferedProgress
-    )
-  }, [])
+  const isLiked = useSelector((state) => state.allTracks.isLikedTrack)
+  console.log(isLiked)
   const dispatch = useDispatch()
   const { theme } = useContext(ThemeContext)
   const selectedTrackInfo = useSelector(
     (state) => state.allTracks.selectedTrackData
   )
-
+  const mainData = useSelector((state) => state.allTracks.mainPageTracks)
+  const favData = useSelector((state) => state.allTracks.favPageTracks)
+  const compilTracks1 = useSelector(
+    (state) => state.allTracks.compilationTracks1
+  )
+  const compilTracks2 = useSelector(
+    (state) => state.allTracks.compilationTracks2
+  )
+  const compilTracks3 = useSelector(
+    (state) => state.allTracks.compilationTracks3
+  )
   const audioRef = useRef(null)
 
   function handleVolumeChange(value) {
@@ -122,10 +127,65 @@ function Bar() {
     }
   }
 
+  const accessToken = localStorage.getItem('token')
+  const userPassword = localStorage.getItem('password')
+  const userLogin = localStorage.getItem('login')
+
+  const data = {
+    email: userLogin,
+    password: userPassword,
+  }
+  function handleToggleLike(method) {
+    const requestOptions = {
+      url: `https://skypro-music-api.skyeng.tech/catalog/track/${selectedTrackInfo.id}/favorite/`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+
+    if (method === 'post') {
+      requestOptions.method = 'post'
+      requestOptions.data = data
+    } else if (method === 'delete') {
+      requestOptions.method = 'delete'
+    }
+    function getFromStringCompilationId(string) {
+      return string.slice(-1)
+    }
+
+    axios(requestOptions)
+      .then((response) => {
+        console.log('update')
+        props.updateMainTracks()
+        props.updateFavTracks()
+
+        setTimeout(() => {
+          dispatch(setIsliked(selectedTrackInfo.track_file))
+        }, 700)
+        if (
+          props.selectedPage !== 'main' &&
+          props.selectedPage !== 'myTracks'
+        ) {
+          props.updateCompilationTracks(
+            getFromStringCompilationId(props.selectedPage)
+          )
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        navigate('/login')
+        localStorage.removeItem('username')
+      })
+  }
+
   useEffect(() => {
     handleStop()
     handleStart()
   }, [selectedTrackInfo.track_file])
+  useEffect(() => {
+    dispatch(setIsliked(selectedTrackInfo.track_file))
+  }, [selectedTrackInfo.track_file])
+
   if (!isShowBar) {
     return <div></div>
   } else
@@ -274,21 +334,15 @@ function Bar() {
                 </div>
                 <div className={styles.track_play__like_dis}>
                   <div
+                    onClick={() => {
+                      handleToggleLike(isLiked ? 'delete' : 'post')
+                    }}
                     className={`${styles.track_play__like} ${styles._btn_icon}`}
                   >
                     <img
                       className={styles.track_play__like_svg}
-                      src={iconLike}
+                      src={isLiked ? iconDislike : iconLike}
                       alt="like"
-                    />
-                  </div>
-                  <div
-                    className={`${styles.track_play__dislike} ${styles._btn_icon}`}
-                  >
-                    <img
-                      className={styles.track_play__dislike_svg}
-                      src={iconDislike}
-                      alt="dislike"
                     />
                   </div>
                 </div>

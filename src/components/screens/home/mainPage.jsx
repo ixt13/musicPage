@@ -4,7 +4,7 @@ import CenterBlockSearch from './centerblock/search/search.jsx'
 import CenterBlockFilter from './centerblock/filter/filter.jsx'
 
 import PlayListTitle from '../home/centerblock/content/playListTitle/playListTitle'
-
+import { setCompilationTracks } from '../../../redux/slicers/allTracksData'
 import Bar from './bar/bar.jsx'
 import Sidebar from './sideBar/sideBar.jsx'
 import { useContext, useEffect } from 'react'
@@ -18,6 +18,9 @@ import {
   setRenderMainPageTracks,
   setFavPageTracks,
   setMainPageTracks,
+  setRenderCompilationTracks1,
+  setRenderCompilationTracks2,
+  setRenderCompilationTracks3,
 } from '../../../redux/slicers/allTracksData'
 import PlaylistBox from './centerblock/content/playListBox/playListBox'
 import { useState } from 'react'
@@ -32,10 +35,22 @@ function MainPage(props) {
 
   const mainData = useSelector((state) => state.allTracks.mainPageTracks)
   const favData = useSelector((state) => state.allTracks.favPageTracks)
+  const compilTracks1 = useSelector(
+    (state) => state.allTracks.compilationTracks1
+  )
+  const compilTracks2 = useSelector(
+    (state) => state.allTracks.compilationTracks2
+  )
+  const compilTracks3 = useSelector(
+    (state) => state.allTracks.compilationTracks3
+  )
   const [search, setSearch] = useState([])
   function handleFilterReset() {
     dispatch(setRenderMainPageTracks(mainData))
     dispatch(setRenderFavTracksData(favData))
+    dispatch(setRenderCompilationTracks1(compilTracks1))
+    dispatch(setRenderCompilationTracks2(compilTracks2))
+    dispatch(setRenderCompilationTracks3(compilTracks3))
   }
   function handleInputSearch(value) {
     if (props.page === 'main') {
@@ -48,9 +63,43 @@ function MainPage(props) {
           )
         )
       )
-    } else {
+    }
+    if (props.page === 'myTracks') {
       dispatch(
         setRenderFavTracksData(
+          search.filter(
+            (item) =>
+              item.name.toLowerCase().includes(value.toLowerCase()) ||
+              item.author.toLowerCase().includes(value.toLowerCase())
+          )
+        )
+      )
+    }
+    if (props.page === 'compilation1') {
+      dispatch(
+        setRenderCompilationTracks1(
+          search.filter(
+            (item) =>
+              item.name.toLowerCase().includes(value.toLowerCase()) ||
+              item.author.toLowerCase().includes(value.toLowerCase())
+          )
+        )
+      )
+    }
+    if (props.page === 'compilation2') {
+      dispatch(
+        setRenderCompilationTracks2(
+          search.filter(
+            (item) =>
+              item.name.toLowerCase().includes(value.toLowerCase()) ||
+              item.author.toLowerCase().includes(value.toLowerCase())
+          )
+        )
+      )
+    }
+    if (props.page === 'compilation3') {
+      dispatch(
+        setRenderCompilationTracks3(
           search.filter(
             (item) =>
               item.name.toLowerCase().includes(value.toLowerCase()) ||
@@ -65,9 +114,31 @@ function MainPage(props) {
       dispatch(
         setRenderMainPageTracks(mainData.filter((el) => el.genre === genre))
       )
-    } else if (page === 'myTracks') {
+    }
+    if (page === 'myTracks') {
       dispatch(
         setRenderFavTracksData(favData.filter((el) => el.genre === genre))
+      )
+    }
+    if (page === 'compilation1') {
+      dispatch(
+        setRenderCompilationTracks1(
+          compilTracks1.filter((el) => el.genre === genre)
+        )
+      )
+    }
+    if (page === 'compilation2') {
+      dispatch(
+        setRenderCompilationTracks2(
+          compilTracks2.filter((el) => el.genre === genre)
+        )
+      )
+    }
+    if (page === 'compilation3') {
+      dispatch(
+        setRenderCompilationTracks3(
+          compilTracks3.filter((el) => el.genre === genre)
+        )
       )
     }
   }
@@ -76,9 +147,31 @@ function MainPage(props) {
       dispatch(
         setRenderMainPageTracks(mainData.filter((el) => el.author === author))
       )
-    } else if (page === 'myTracks') {
+    }
+    if (page === 'myTracks') {
       dispatch(
         setRenderFavTracksData(favData.filter((el) => el.author === author))
+      )
+    }
+    if (page === 'compilation1') {
+      dispatch(
+        setRenderCompilationTracks1(
+          compilTracks1.filter((el) => el.author === author)
+        )
+      )
+    }
+    if (page === 'compilation2') {
+      dispatch(
+        setRenderCompilationTracks2(
+          compilTracks2.filter((el) => el.author === author)
+        )
+      )
+    }
+    if (page === 'compilation3') {
+      dispatch(
+        setRenderCompilationTracks3(
+          compilTracks3.filter((el) => el.author === author)
+        )
       )
     }
   }
@@ -92,13 +185,39 @@ function MainPage(props) {
                 .sort((a, b) => b.release_date.localeCompare(a.release_date))
             )
           )
-        : dispatch(
+        : props.page === 'myTracks'
+        ? dispatch(
             setRenderFavTracksData(
               favData
                 .filter((item) => item.release_date)
                 .sort((a, b) => b.release_date.localeCompare(a.release_date))
             )
           )
+        : props.page === 'compilation1'
+        ? dispatch(
+            setRenderCompilationTracks1(
+              compilTracks1
+                .filter((item) => item.release_date)
+                .sort((a, b) => b.release_date.localeCompare(a.release_date))
+            )
+          )
+        : props.page === 'compilation2'
+        ? dispatch(
+            setRenderCompilationTracks2(
+              compilTracks2
+                .filter((item) => item.release_date)
+                .sort((a, b) => b.release_date.localeCompare(a.release_date))
+            )
+          )
+        : props.page === 'compilation3'
+        ? dispatch(
+            setRenderCompilationTracks3(
+              compilTracks3
+                .filter((item) => item.release_date)
+                .sort((a, b) => b.release_date.localeCompare(a.release_date))
+            )
+          )
+        : ''
     }
 
     if (filter === 'ascendent') {
@@ -110,13 +229,39 @@ function MainPage(props) {
                 .sort((a, b) => a.release_date.localeCompare(b.release_date))
             )
           )
-        : dispatch(
+        : props.page === 'myTracks'
+        ? dispatch(
             setRenderFavTracksData(
               favData
                 .filter((item) => item.release_date)
                 .sort((a, b) => a.release_date.localeCompare(b.release_date))
             )
           )
+        : props.page === 'compilation1'
+        ? dispatch(
+            setRenderCompilationTracks1(
+              compilTracks1
+                .filter((item) => item.release_date)
+                .sort((a, b) => a.release_date.localeCompare(b.release_date))
+            )
+          )
+        : props.page === 'compilation2'
+        ? dispatch(
+            setRenderCompilationTracks2(
+              compilTracks2
+                .filter((item) => item.release_date)
+                .sort((a, b) => a.release_date.localeCompare(b.release_date))
+            )
+          )
+        : props.page === 'compilation3'
+        ? dispatch(
+            setRenderCompilationTracks3(
+              compilTracks3
+                .filter((item) => item.release_date)
+                .sort((a, b) => a.release_date.localeCompare(b.release_date))
+            )
+          )
+        : ''
     }
   }
   function getMainPageAllTracks() {
@@ -149,9 +294,7 @@ function MainPage(props) {
           setSearch(response.data)
         }
       })
-      .catch((error) => {
-        console.log(error)
-
+      .catch(() => {
         if (props.page === 'myTracks') {
           navigate('/login')
           localStorage.removeItem('username')
@@ -162,10 +305,37 @@ function MainPage(props) {
     dispatch(setSelectedTrackData(link))
   }
   useEffect(() => {
-    getFavTracks()
-
-    getMainPageAllTracks()
+    if (props.page === 'main') {
+      getMainPageAllTracks()
+    } else if (props.page === 'myTracks') {
+      getFavTracks()
+    }
   }, [props.page])
+
+  function getCompilation(compilID) {
+    axios
+      .get(`https://skypro-music-api.skyeng.tech/catalog/selection/${compilID}`)
+      .then((response) => {
+        if (compilID === '1') {
+          dispatch(setRenderCompilationTracks1(response.data.items))
+        }
+        if (compilID === '2') {
+          dispatch(setRenderCompilationTracks2(response.data.items))
+        }
+        if (compilID === '3') {
+          dispatch(setRenderCompilationTracks3(response.data.items))
+        }
+        dispatch(
+          setCompilationTracks({
+            page: `compilation${compilID}`,
+            data: response.data.items,
+          })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   return (
     <div
       className={`${styles.wrapper} ${
@@ -200,13 +370,25 @@ function MainPage(props) {
                   setSelectedTrackLink={handleSetTrackLink}
                   updateMainTracks={getMainPageAllTracks}
                   updateFavTracks={getFavTracks}
+                  updateCompilationTracks={getCompilation}
                 />
               </div>
             </div>
           </div>
-          <Sidebar showImages={true} />
+          <Sidebar
+            showImages={true}
+            getCompils={getCompilation}
+            updateMainTracks={getMainPageAllTracks}
+            selectedPage={props.page}
+            updateCompilationTracks={getCompilation}
+          />
         </main>
-        <Bar />
+        <Bar
+          selectedPage={props.page}
+          updateMainTracks={getMainPageAllTracks}
+          updateFavTracks={getFavTracks}
+          updateCompilationTracks={getCompilation}
+        />
       </div>
     </div>
   )
