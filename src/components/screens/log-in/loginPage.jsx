@@ -25,7 +25,6 @@ function loginForm() {
         },
       })
       .then((response) => {
-        console.log(response.data.access)
         localStorage.setItem('token', response.data.access)
       })
       .catch((error) => {
@@ -45,7 +44,6 @@ function loginForm() {
             localStorage.setItem('username', response.data.username)
             localStorage.setItem('login', userLogin)
             localStorage.setItem('password', userPassword)
-            console.log(response)
 
             dispatch(setUserData(response.data))
             getToken()

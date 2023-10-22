@@ -19,20 +19,22 @@ const allTrackSlicer = createSlice({
   initialState,
   reducers: {
     setIsliked: (state, action) => {
-      if (state.mainPageTracks.length) {
-        const selectedTrack = state.mainPageTracks.find(
-          (el) => el.track_file === action.payload
-        )
-
-        const userLogin = localStorage.getItem('login')
-        const liked =
-          selectedTrack.stared_user &&
-          selectedTrack.stared_user.some(
-            (favTrack) => favTrack.email === userLogin
+      if (action.payload !== undefined) {
+        if (state.mainPageTracks.length) {
+          const selectedTrack = state.mainPageTracks.find(
+            (el) => el.track_file === action.payload
           )
 
-        return { ...state, isLikedTrack: liked }
-      }
+          const userLogin = localStorage.getItem('login')
+          const liked =
+            selectedTrack.stared_user &&
+            selectedTrack.stared_user.some(
+              (favTrack) => favTrack.email === userLogin
+            )
+
+          return { ...state, isLikedTrack: liked }
+        }
+      } else return
     },
     setRenderMainPageTracks: (state, action) => {
       return { ...state, renderMainPageTracksData: action.payload }

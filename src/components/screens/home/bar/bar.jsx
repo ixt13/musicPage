@@ -58,7 +58,7 @@ function Bar(props) {
     [bufferedProgressValue]
   )
   const isLiked = useSelector((state) => state.allTracks.isLikedTrack)
-  console.log(isLiked)
+
   const dispatch = useDispatch()
   const { theme } = useContext(ThemeContext)
   const selectedTrackInfo = useSelector(
@@ -155,13 +155,14 @@ function Bar(props) {
 
     axios(requestOptions)
       .then((response) => {
-        console.log('update')
         props.updateMainTracks()
         props.updateFavTracks()
+        if (mainData.length) {
+          setTimeout(() => {
+            dispatch(setIsliked(selectedTrackInfo.track_file))
+          }, 700)
+        }
 
-        setTimeout(() => {
-          dispatch(setIsliked(selectedTrackInfo.track_file))
-        }, 700)
         if (
           props.selectedPage !== 'main' &&
           props.selectedPage !== 'myTracks'
@@ -182,6 +183,7 @@ function Bar(props) {
     handleStop()
     handleStart()
   }, [selectedTrackInfo.track_file])
+
   useEffect(() => {
     dispatch(setIsliked(selectedTrackInfo.track_file))
   }, [selectedTrackInfo.track_file])
@@ -201,7 +203,6 @@ function Bar(props) {
           onProgress={handleProgress}
           onEnded={() => {
             dispatch(setnextTrack(memoShuffled))
-            console.log('end')
           }}
         />
         <div className={`${styles.bar__content} ${styles[theme]}`}>
