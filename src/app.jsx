@@ -1,5 +1,5 @@
 import AppRoutes from './routes.jsx'
-import { ThemeProvider } from './components/screens/ThemeProvider/ThemeProvider.jsx'
+import { ThemeProvider } from './UI/components/ThemeProvider/ThemeProvider'
 function App() {
   return (
     <ThemeProvider>
