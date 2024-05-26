@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/musicPage/static/css/main.f23164f2.css",
-    "main.js": "/musicPage/static/js/main.23501193.js",
+    "main.js": "/musicPage/static/js/main.e2c246f2.js",
     "static/media/Frame 5.png": "/musicPage/static/media/Frame 5.0009d096a7ae255e4355.png",
     "static/media/Frame 4.png": "/musicPage/static/media/Frame 4.98b51c0744ded7ffecba.png",
     "static/media/Frame 3.png": "/musicPage/static/media/Frame 3.d52ff25d244ada617b3c.png",
@@ -21,10 +21,10 @@
     "static/media/pause.svg": "/musicPage/static/media/pause.bc7640d7fe537868ad882a6d7335a691.svg",
     "static/media/play.svg": "/musicPage/static/media/play.517888c06b9f05afb66abf826ef67023.svg",
     "main.f23164f2.css.map": "/musicPage/static/css/main.f23164f2.css.map",
-    "main.23501193.js.map": "/musicPage/static/js/main.23501193.js.map"
+    "main.e2c246f2.js.map": "/musicPage/static/js/main.e2c246f2.js.map"
   },
   "entrypoints": [
     "static/css/main.f23164f2.css",
-    "static/js/main.23501193.js"
+    "static/js/main.e2c246f2.js"
   ]
 }
