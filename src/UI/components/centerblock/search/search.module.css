@@ -1,7 +1,8 @@
 .centerblock__search {
+  margin-top: 10px;
   width: 100%;
   border-bottom: 1px solid #4e4e4e;
-  margin-bottom: 51px;
+  margin-bottom: 31px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -43,7 +44,7 @@
   flex-grow: 100;
   background-color: transparent;
   border: none;
-  padding: 13px 10px 14px;
+
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

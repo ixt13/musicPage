@@ -1,6 +1,4 @@
 .sidebar__block {
-  height: 100%;
-  padding: 120px 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -55,7 +53,6 @@
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  padding: 12px 0 15px 0;
 }
 .sidebar__personal_name {
   font-style: normal;
@@ -72,8 +69,9 @@
   border-radius: 50%;
 }
 .main__sidebar {
-  width: 418px;
-  padding: 20px 90px 20px 78px;
+  background-color: #181818;
+  width: 15vw;
+  background-color: #232323;
 }
 
 .skeleton {

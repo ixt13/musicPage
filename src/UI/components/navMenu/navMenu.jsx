@@ -1,13 +1,11 @@
-import { NavLink } from 'react-router-dom'
-import styles from './navMenu.module.css'
 import cn from 'classnames'
+import { useContext } from 'react'
+import { NavLink } from 'react-router-dom'
 import themeDarkIcon from '../../../assets/icon/darkThemeIcon.svg'
 import themeLightIcon from '../../../assets/icon/lightThemeIcon.svg'
-import { ThemeContext } from '../ThemeProvider/ThemeProvider'
-import { useContext } from 'react'
-import whiteLogo from '../../../assets/logo.png'
-import blackLogo from '../../../assets/logo.svg'
-
+import { ReactComponent as MenuIcon } from '../../../assets/icons/menu.svg'
+import { ThemeContext } from '../../../contextProviders/ThemeProvider'
+import styles from './navMenu.module.css'
 function NavMenu() {
   const logged = localStorage.getItem('username')
   const { theme, toggleTheme } = useContext(ThemeContext)
@@ -23,34 +21,13 @@ function NavMenu() {
         theme === 'dark' ? styles.main__nav_Dark : styles.main__nav_Light
       }  `}
     >
-      <div className={styles.nav__logo}>
-        <img
-          className={styles.logo__image}
-          src={theme === 'dark' ? whiteLogo : blackLogo}
-          alt="logo"
-        />
-      </div>
       <div
         className={`${styles.nav__burger}  ${styles._btn}  `}
         onClick={showHide}
       >
-        <span
-          className={`${styles.burger__line} ${
-            theme === 'dark' ? styles.light : styles.burger__line2
-          }`}
-        ></span>
-        <span
-          className={`${styles.burger__line} ${
-            theme === 'dark' ? styles.light : styles.burger__line2
-          }`}
-        ></span>
-        <span
-          className={`${styles.burger__line} ${
-            theme === 'dark' ? styles.light : styles.burger__line2
-          }`}
-        ></span>
+        <MenuIcon />
       </div>
-      <div id="burger" className={styles.nav__menu}>
+      <div id="burger" className={`${styles.nav__menu} ${styles.nav__menuPos}`}>
         <ul className={styles.menu__list}>
           <li className={styles.menu__item}>
             <NavLink

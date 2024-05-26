@@ -1,5 +1,5 @@
-import styles from './playListTitle.module.css'
 import iconWatch from '../../../assets/icon/watch.svg'
+import styles from './playListTitle.module.css'
 
 function PlayListTitle() {
   return (

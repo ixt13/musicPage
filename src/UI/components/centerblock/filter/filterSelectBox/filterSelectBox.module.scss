@@ -1,0 +1,31 @@
+.filterContainer {
+  position: absolute;
+  width: 248px;
+  height: 305px;
+  border-radius: 12px;
+  margin-top: 40px;
+  border: 1px solid #313131;
+}
+.container {
+}
+.list {
+}
+
+.light {
+  color: black;
+  background-color: #f6f5f3;
+  border: 1px solid black;
+}
+
+.dark {
+  color: white;
+  background-color: #1c1c1c;
+  border: 1px solid #ffffff;
+}
+
+.isDispalyed {
+  visibility: visible;
+}
+.isntDisplayed {
+  visibility: hidden;
+}

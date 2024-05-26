@@ -1,6 +1,6 @@
+import { useContext } from 'react'
+import { ThemeContext } from '../../../../contextProviders/ThemeProvider'
 import styles from './search.module.css'
-import { useContext, useEffect } from 'react'
-import { ThemeContext } from '../../ThemeProvider/ThemeProvider'
 
 function Search(props) {
   const { theme } = useContext(ThemeContext)

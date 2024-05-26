@@ -1,0 +1,96 @@
+.mainControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.coursControls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.player__track_play {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.player__btn_prev {
+  margin-right: 23px;
+}
+
+.player__btn_prev_svg {
+  width: 15px;
+  height: 14px;
+}
+
+.player__btn_play {
+  margin-right: 23px;
+}
+
+.player__btn_play_svg {
+  width: 22px;
+  height: 20px;
+  fill: #d9d9d9;
+}
+
+.player__btn_next {
+  margin-right: 28px;
+  fill: #a53939;
+}
+
+.player__btn_next_svg {
+  width: 15px;
+  height: 14px;
+  fill: inherit;
+  stroke: #d9d9d9;
+}
+
+.player__btn_repeat {
+  margin-right: 24px;
+}
+
+._btn_icon:hover {
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
+
+._btn_icon:active {
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+._btn_icon:active .track_play__like_svg,
+._btn_icon:active .track_play__dislike_svg {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+.player__btn_repeat_svg {
+  width: 18px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
+}
+
+.player__btn_shuffle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.player__btn_shuffle_svg {
+  width: 19px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
+}

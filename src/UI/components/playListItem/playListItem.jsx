@@ -1,107 +1,67 @@
-import axios from 'axios'
-import styles from './playListItem.module.css'
-import iconLike from '../../../assets/icon/like.svg'
-import iconTrack from '../../../assets/icon/trackDarkIcon.svg'
-import iconLiked from '../../../assets/icon/Vector 15.svg'
-import lightTrackIcon from '../../../assets/icon/lightTrackIcon.svg'
-import { useState, useEffect } from 'react'
-import { ThemeContext } from '../ThemeProvider/ThemeProvider'
 import { useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+import { ReactComponent as IconLike } from '../../../assets/icons/like.svg'
+import { ReactComponent as TrackIcon } from '../../../assets/icons/trackIcon.svg'
+import { ThemeContext } from '../../../contextProviders/ThemeProvider'
+import { TracksContext } from '../../../contextProviders/trackBarProvider'
+import { formatDuration } from '../../../hooks/fns'
+import styles from './playListItem.module.scss'
 
-import playGif from '../../../assets/music-disc.gif'
+function PlayListItem({
+  name,
+  album,
+  author,
+  duration_in_seconds,
+  genre,
+  release_date,
+  like,
+  stared_user,
+  page,
+  selectTrack,
+}) {
+  const { theme } = useContext(ThemeContext)
+  const { setPage } = useContext(TracksContext)
+  const loggedUserID = localStorage.getItem('userID')
 
-import { useNavigate } from 'react-router-dom'
-
-function PlayListItem(props) {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const [trackTime, setTrackTime] = useState(0)
-  const [showPlayGif, setShowPlayGif] = useState(false)
-
-  function formatDuration(durationInSeconds) {
-    const minutes = Math.floor(durationInSeconds / 60)
-    const seconds = durationInSeconds % 60
-    setTrackTime(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`)
+  const location = useLocation().pathname
+  const liked = (array, comp) => {
+    return array.find((el) => el.id === comp)
   }
 
-  const { theme } = useContext(ThemeContext)
-
   return (
-    <div className={styles.playlist__item}>
-      <div className={styles.playlist__track}>
-        <div
-          onClick={() => {
-            props.setLinkTrack(props.url)
-            dispatch(setSelectedPage(props.page))
-            dispatch(setShowBar(true))
-          }}
-          className={styles.track__title}
-        >
-          <div className={styles.track__title_image}>
-            <img
-              src={
-                (theme === 'dark' && showPlayGif) ||
-                (theme === 'light' && showPlayGif)
-                  ? playGif
-                  : theme === 'dark'
-                  ? iconTrack
-                  : lightTrackIcon
-              }
-              className={styles.track__title_svg}
-              alt="#"
-            />
-          </div>
+    <div
+      className={styles.playlist__item}
+      onClick={() => {
+        setPage(location)
+        selectTrack()
+      }}
+    >
+      <TrackIcon className={styles.trackIcon} />
 
-          <div className={styles.track__title_text}>
-            <div
-              className={`${styles.track__title_link} ${styles[theme]}`}
-              href="#"
-            >
-              {props.name}
-            </div>
-          </div>
-        </div>
+      <div className={`${styles.track__title_text}  ${styles.pos}`}>{name}</div>
 
-        <div
-          onClick={() => {
-            props.setLinkTrack(props.url, props.author, props.name)
+      <div className={`${styles.track__author} ${styles.pos}`}>{author}</div>
+
+      <div className={`${styles.track__album} ${styles.pos}`}>{album}</div>
+
+      <div className={styles.track__time}>
+        <IconLike
+          onClick={(e) => {
+            e.stopPropagation()
+            like()
           }}
-          className={styles.track__author}
-        >
-          <div
-            className={`${styles.track__author_link} ${styles[theme]}`}
-            href="#"
-          >
-            {props.author}
-          </div>
-        </div>
-        <div
-          onClick={() => {
-            props.setLinkTrack(props.url, props.author, props.name)
-          }}
-          className={styles.track__album}
-        >
-          <div className={styles.track__album_link} href="#">
-            {props.album}
-          </div>
-        </div>
-        <div className={styles.track__time}>
-          <img
-            onClick={() => {
-              props.liked || props.page === 'myTracks'
-                ? handleToggleLike('delete')
-                : handleToggleLike('post')
-            }}
-            className={styles.track__time_svg}
-            src={
-              props.liked || props.page === 'myTracks' ? iconLiked : iconLike
-            }
-            alt=""
-          />
-          <span className={styles.track__time_text}>{trackTime}</span>
-        </div>
+          className={styles.likeIcon}
+          fill={
+            page === 'myTracks'
+              ? '#D3D3D3'
+              : liked(stared_user, Number(loggedUserID))
+              ? '#D3D3D3'
+              : 'transparent'
+          }
+        />
+        <span className={styles.track__time_text}>
+          {formatDuration(duration_in_seconds)}
+        </span>
       </div>
     </div>
   )

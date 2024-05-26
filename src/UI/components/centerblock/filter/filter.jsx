@@ -1,40 +1,65 @@
-import styles from './filter.module.css'
-
-import FilterArtist from './filterList/artist/artist'
-import FilterYear from './filterList/genre/genre'
-import FilterGenre from './filterList/genre/genre'
+import { useContext, useState } from 'react'
+import { ThemeContext } from '../../../../contextProviders/ThemeProvider'
+import styles from './filter.module.scss'
+import FilterSelectBox from './filterSelectBox/filterSelectBox'
 
 function Filter(props) {
+  const { theme } = useContext(ThemeContext)
+
+  const [subMenuIndex, setSubMenuIndex] = useState(0)
+
+  const toggleSubMenu = (index) => {
+    subMenuIndex === index ? setSubMenuIndex(0) : setSubMenuIndex(index)
+  }
+
   return (
     <div className={styles.centerblock__filter}>
       <div className={`${styles.filter__title}  `}>Искать по:</div>
       <div className={styles.filter_set}>
-        <div
-          className={`${styles.filter__button} ${styles._btn_text}  `}
+        <button
           onClick={() => {
-            handleFilterClick('artist')
+            toggleSubMenu(1)
           }}
+          className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
         >
-          исполнителю
-        </div>
+          артистам
+        </button>
 
-        <FilterArtist filter={props.artistFilter} page={props.selectedPage} />
+        {subMenuIndex === 1 && (
+          <FilterSelectBox hideOnBlurHandle={setSubMenuIndex} />
+        )}
       </div>
       <div className={styles.filter_set}>
-        <div className={`${styles.filter__button}   ${styles._btn_text}  `}>
-          году выпуска
-        </div>
-        <FilterYear />
+        <button
+          onClick={() => {
+            toggleSubMenu(2)
+          }}
+          className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+        >
+          году
+        </button>
+        {subMenuIndex === 2 && (
+          <FilterSelectBox hideOnBlurHandle={setSubMenuIndex} />
+        )}
       </div>
       <div className={styles.filter_set}>
-        <div className={`${styles.filter__button}    ${styles._btn_text}  `}>
+        <button
+          onClick={() => {
+            toggleSubMenu(3)
+          }}
+          className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+        >
           жанру
-        </div>
+        </button>
 
-        <FilterGenre page={props.selectedPage} filter={props.genreFilter} />
+        {subMenuIndex === 3 && (
+          <FilterSelectBox hideOnBlurHandle={setSubMenuIndex} />
+        )}
       </div>
-      <button className={`${styles.filter__button} }  ${styles._btn_text}  `}>
-        Reset Filters
+      <button
+        className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+      >
+        reset
       </button>
     </div>
   )

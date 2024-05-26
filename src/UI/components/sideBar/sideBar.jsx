@@ -1,10 +1,10 @@
-import styles from './sideBar.module.css'
-import classicIconPlaylist from '../../../assets/icon/Frame 5.png'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import electronicIconPlaylist from '../../../assets/icon/Frame 3.png'
 import rockIconPlaylist from '../../../assets/icon/Frame 4.png'
-import { useContext, useEffect } from 'react'
-import { ThemeContext } from '../ThemeProvider/ThemeProvider'
-import { useNavigate } from 'react-router-dom'
+import classicIconPlaylist from '../../../assets/icon/Frame 5.png'
+import { ThemeContext } from '../../../contextProviders/ThemeProvider'
+import styles from './sideBar.module.css'
 
 import { useDispatch } from 'react-redux'
 

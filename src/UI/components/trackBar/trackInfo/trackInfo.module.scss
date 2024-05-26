@@ -1,0 +1,14 @@
+.trackImg {
+  width: 38px;
+  height: 38px;
+  background-color: #313131;
+}
+.trackInfo {
+  display: flex;
+  flex-direction: column;
+}
+.trackData {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

@@ -1,14 +1,9 @@
-import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+function ProtectedRoute({ children, page }) {
+  const tokenData = localStorage.getItem('token')
 
-import { useLocation } from 'react-router-dom'
-function ProtectedRoute({ children }) {
-  const logged = localStorage.getItem('username')
-  let location = useLocation()
-  console.log(page)
-  const page = useSelector((state) => state.allTracks.selectedPage)
-  if (!logged && page === 'myTracks') {
-    return <Navigate to="/login" state={{ from: location }} replace />
+  if (!tokenData) {
+    return <Navigate to="/login" />
   }
 
   return children
