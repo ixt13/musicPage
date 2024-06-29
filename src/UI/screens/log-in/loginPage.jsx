@@ -3,13 +3,14 @@ import logo from '../../../assets/logo.svg'
 import styles from './LogRegPages.module.css'
 
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logUser } from '../../../api/userApi/login'
-
 import IconBxLoaderCircle from '../../../assets/icons/IconBxLoaderCircle'
+import { ghPagesPath } from '../../../consts'
 function LoginForm() {
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
   const [loginPlaceHolder, setLoginPlacehoder] = useState('Логин')
   const [passwordPlaceholder, setPasswordPlaceholder] = useState('Пароль')
   const [errorInfo, setErrorInfo] = useState('')
@@ -26,7 +27,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/')
+      navigate(`${ghPagesPath}${'/'}`)
     }
   }, [isSuccess])
 
@@ -56,7 +57,7 @@ function LoginForm() {
     setPasswordPlaceholder('Пароль')
     setErrorInfo('')
   }
-
+  // dispatch(setTrackBarIsVisible(false))
   return (
     <div className={styles.login_form}>
       <form
