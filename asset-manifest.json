@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/musicPage/static/css/main.ec0807c4.css",
-    "main.js": "/musicPage/static/js/main.e631853f.js",
+    "main.css": "/musicPage/static/css/main.eae76c6b.css",
+    "main.js": "/musicPage/static/js/main.3ac63d4b.js",
     "static/media/Stratos-Regular.woff2": "/musicPage/static/media/Stratos-Regular.ec4882423f79afa46408.woff2",
     "static/media/logo.svg": "/musicPage/static/media/logo.7095c415f3565c99536d6eca3db1784b.svg",
     "static/media/shuffle.svg": "/musicPage/static/media/shuffle.e5206909c53f84708bb58740a5c91fb4.svg",
@@ -15,11 +15,11 @@
     "static/media/next.svg": "/musicPage/static/media/next.021d029223253ec8c34660683aa328ca.svg",
     "static/media/pause.svg": "/musicPage/static/media/pause.bc7640d7fe537868ad882a6d7335a691.svg",
     "static/media/play.svg": "/musicPage/static/media/play.517888c06b9f05afb66abf826ef67023.svg",
-    "main.ec0807c4.css.map": "/musicPage/static/css/main.ec0807c4.css.map",
-    "main.e631853f.js.map": "/musicPage/static/js/main.e631853f.js.map"
+    "main.eae76c6b.css.map": "/musicPage/static/css/main.eae76c6b.css.map",
+    "main.3ac63d4b.js.map": "/musicPage/static/js/main.3ac63d4b.js.map"
   },
   "entrypoints": [
-    "static/css/main.ec0807c4.css",
-    "static/js/main.e631853f.js"
+    "static/css/main.eae76c6b.css",
+    "static/js/main.3ac63d4b.js"
   ]
 }
