@@ -5,6 +5,7 @@ import { ReactComponent as TrackIcon } from '../../../assets/icons/melody.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { setLikeTrack } from '../../../api/musicHooks/setLikeTrack'
 import { useRemoveTrack } from '../../../api/userApi/deleteFromFav'
+import { ghPagesPath } from '../../../consts'
 import { formatDuration } from '../../../hooks/fns'
 import {
   setCurrentPlaylistTarget,
@@ -34,7 +35,7 @@ function PlayListItem({
 
   if (isError || error) {
     dispatch(setTrackBarIsVisible(false))
-    navigate('/login')
+    navigate(`${ghPagesPath}${'/login'}`)
   }
 
   const isLiked = () => {
@@ -46,7 +47,7 @@ function PlayListItem({
     return false
   }
   const setLocationPlaylist = () => {
-    if (location === '/') {
+    if (location === `${ghPagesPath}${'/'}`) {
       return 'main'
     }
     return 'fav'
@@ -57,7 +58,7 @@ function PlayListItem({
     dispatch(setTrackBarIsVisible(true))
     dispatch(setCurrentPlaylistTarget(setLocationPlaylist()))
 
-    if (location === '/') {
+    if (location === `${ghPagesPath}${'/'}`) {
       dispatch(setIsLiked(isLiked()))
     } else {
       dispatch(setIsLiked(true))
@@ -65,7 +66,7 @@ function PlayListItem({
   }
 
   const handleLikeToggle = () => {
-    if (location === '/') {
+    if (location === `${ghPagesPath}${'/'}`) {
       if (isLiked()) {
         deleteTrack(id)
       } else {
@@ -105,7 +106,8 @@ function PlayListItem({
             handleLikeToggle()
           }}
           fill={
-            (location === '/' && isLiked()) || location === '/myTracks'
+            (location === `${ghPagesPath}${'/'}` && isLiked()) ||
+            location === `${ghPagesPath}${'/myTracks'}`
               ? '#696969'
               : 'transparent'
           }

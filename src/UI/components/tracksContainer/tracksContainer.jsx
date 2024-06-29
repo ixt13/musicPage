@@ -1,44 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { setLikeTrack } from '../../../api/musicHooks/setLikeTrack'
-import { useRemoveTrack } from '../../../api/userApi/deleteFromFav'
+import { ghPagesPath } from '../../../consts'
 import {
   setMainPlaylist,
   setSecondPlaylist,
 } from '../../../redux/slicers/musicProcesses'
 import PlayListItem from '../playListItem/playListItem'
 import styles from './tracksContainer.module.scss'
-export const TracksContainer = ({ mainPlaylist, secondPlaylist, useFav }) => {
+
+export const TracksContainer = ({ mainPlaylist, secondPlaylist }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation().pathname
 
-  const [tracksContainer, setTracksContainer] = useState([])
-
-  // if (location === '/myTracks' && useFav.isError) {
-  //   dispatch(setTrackBarIsVisible(false))
-  //   navigate('/login')
-  // }
-
-  const { handleLike } = setLikeTrack()
-  const { deleteTrack } = useRemoveTrack()
   /////////////////////-- set playlistContainer on switch page
   useEffect(() => {
     dispatch(setMainPlaylist(mainPlaylist))
     dispatch(setSecondPlaylist(secondPlaylist))
-    if (location === '/' && mainPlaylist) {
-      setTracksContainer(mainPlaylist)
-    } else if (location === '/myTracks' && secondPlaylist) {
-      setTracksContainer(secondPlaylist)
-    }
   }, [location, mainPlaylist, secondPlaylist])
   //////////////////////--
 
   return (
     <>
       <div className={styles.TracksContainer}>
-        {tracksContainer.map((track) => (
+        {(location === `${ghPagesPath}${'/'}` && mainPlaylist
+          ? mainPlaylist
+          : location === `${ghPagesPath}${'/myTracks'}` && secondPlaylist
+          ? secondPlaylist
+          : []
+        ).map((track) => (
           <PlayListItem
             key={track.id}
             name={track.name}

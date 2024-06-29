@@ -1,8 +1,8 @@
 import cn from 'classnames'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as MenuIcon } from '../../../assets/icons/menu.svg'
-
-import { useDispatch } from 'react-redux'
+import { ghPagesPath } from '../../../consts'
 import { setTrackBarIsVisible } from '../../../redux/slicers/musicProcesses'
 import styles from './navMenu.module.css'
 function NavMenu() {
@@ -25,7 +25,7 @@ function NavMenu() {
         <ul className={styles.menu__list}>
           <li className={styles.menu__item}>
             <NavLink
-              to="/"
+              to={`${ghPagesPath}${'/'}`}
               className={({ isActive }) =>
                 cn(styles._btn_text, styles.dark, {
                   [styles.activeNavLink]: isActive,
@@ -37,7 +37,7 @@ function NavMenu() {
           </li>
           <li className={styles.menu__item}>
             <NavLink
-              to="/myTracks"
+              to={`${ghPagesPath}${'/myTracks'}`}
               className={({ isActive }) =>
                 cn(styles._btn_text, styles.dark, {
                   [styles.activeNavLink]: isActive,
@@ -60,7 +60,7 @@ function NavMenu() {
             className={styles.menu__item}
           >
             <NavLink
-              to="/login"
+              to={`${ghPagesPath}${'/login'}`}
               className={({ isActive }) =>
                 cn(styles._btn_text, styles.dark, {
                   [styles.activeNavLink]: isActive,
