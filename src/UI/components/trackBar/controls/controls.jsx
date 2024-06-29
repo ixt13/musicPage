@@ -49,6 +49,7 @@ export const Controls = ({ play, pause }) => {
     <>
       <div className={styles.mainControls}>
         <PrevIcon
+          className={styles.cPointer}
           onClick={() => {
             if (isShuffle) {
               dispatch(setRandomTrackIndex())
@@ -58,12 +59,13 @@ export const Controls = ({ play, pause }) => {
           }}
         />
         {isPlaiyng ? (
-          <PauseIcon onClick={pause} />
+          <PauseIcon onClick={pause} className={styles.cPointer} />
         ) : (
-          <PlayIcon onClick={play} />
+          <PlayIcon onClick={play} className={styles.cPointer} />
         )}
 
         <NextIcon
+          className={styles.cPointer}
           onClick={() => {
             if (isShuffle) {
               dispatch(setRandomTrackIndex())
@@ -76,6 +78,7 @@ export const Controls = ({ play, pause }) => {
 
       <div className={styles.coursControls}>
         <RepeatIcon
+          className={styles.cPointer}
           onClick={() => {
             repeatHancleClick()
           }}
