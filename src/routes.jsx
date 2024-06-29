@@ -1,27 +1,23 @@
-import { Routes, Route } from 'react-router-dom'
-import MainPage from './components/screens/home/mainPage'
-import LoginPage from './components/screens/log-in/loginPage'
-import RegistrationPage from './components/screens/registration/registrationPage.jsx'
+import { Route, Routes } from 'react-router-dom'
+import MainPage from './UI/screens/home/mainPage'
+import LoginForm from './UI/screens/log-in/loginPage'
+import NotFound from './UI/screens/notFound/notFound'
+import RegForm from './UI/screens/registration/registrationPage'
 import ProtectedRoute from './protectedRoute'
-import NotFound from './components/screens/notFound/notFound'
-import PlaylistBox from './components/screens/home/centerblock/content/playListBox/playListBox'
+
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<MainPage page="main" />} />
-      <Route path="/compilation1" element={<MainPage page="compilation1" />} />
-      <Route path="/compilation2" element={<MainPage page="compilation2" />} />
-      <Route path="/compilation3" element={<MainPage page="compilation3" />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/registration" element={<RegForm />} />
+
       <Route
         path="/mytracks"
         element={
-          <MainPage page="myTracks">
-            <ProtectedRoute>
-              <PlaylistBox />
-            </ProtectedRoute>
-          </MainPage>
+          <ProtectedRoute>
+            <MainPage page="myTracks" />
+          </ProtectedRoute>
         }
       />
 

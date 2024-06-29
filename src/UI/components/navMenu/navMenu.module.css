@@ -1,0 +1,105 @@
+.main__nav {
+  width: 15vw;
+
+  font-size: 5px;
+}
+
+.main__nav_Light {
+  background-color: #f6f5f3;
+}
+
+.main__nav_Dark {
+  background-color: #232323;
+}
+
+.nav__burger {
+  width: 20px;
+  height: 36px;
+  padding: 20px 0px 0px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.burger__line {
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+}
+
+.burger__line2 {
+  background-color: black;
+}
+
+.nav__menu {
+  display: block;
+  visibility: hidden;
+}
+.menu__list {
+}
+.menu__item {
+  padding: 5px 0;
+  margin-bottom: 16px;
+}
+
+.nav__menuPos {
+  padding: 0px 0px 0px 20px;
+}
+ul li {
+  list-style: none;
+}
+a,
+a:visited {
+  text-decoration: none;
+  font-family: 'StratosSkyEng', sans-serif;
+  cursor: pointer;
+}
+
+._btn {
+  cursor: pointer;
+}
+
+._btn_text:hover {
+  border-color: #d9b6ff;
+  color: #d9b6ff;
+  cursor: pointer;
+}
+
+._btn_text:active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
+
+.navLink {
+  color: white;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+}
+.icon:hover {
+  cursor: pointer;
+}
+
+.light {
+  color: black;
+  background-color: #f6f5f3;
+}
+
+.dark {
+  color: white;
+  background-color: #232323;
+}
+
+.activeNavLink {
+  border-color: #ad61ff;
+  color: #ad61ff;
+}
