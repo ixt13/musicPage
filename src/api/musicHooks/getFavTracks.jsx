@@ -21,6 +21,8 @@ export const getFavsTracksQuery = () => {
         throw error
       }
     },
+    retry: 1,
   })
+
   return favTracksQuery
 }

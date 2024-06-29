@@ -10,6 +10,8 @@ export const TracksProvider = ({ children }) => {
   const [currentTrackURL, setCurrentTrackURL] = useState(null)
   const [page, setPage] = useState(null)
 
+  const [isVisible, setIsVisible] = useState(false)
+  const [isLikedTrackBar, setIsLikedTrackBar] = useState(false)
   return (
     <TracksContext.Provider
       value={{
@@ -17,11 +19,15 @@ export const TracksProvider = ({ children }) => {
         currentTrackID,
         currentTrackURL,
         page,
+        isVisible,
+        isLikedTrackBar,
 
         setCurrentPage,
         setCurrentTrackID,
         setCurrentTrackURL,
         setPage,
+        setIsVisible,
+        setIsLikedTrackBar,
       }}
     >
       {children}

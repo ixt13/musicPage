@@ -4,48 +4,35 @@ import styles from './trackBar.module.scss'
 // import iconRepeat from '../../../assets/icon/repeat.svg'
 // import isRepeatActiveIcon from '../../../assets/icon/Group 18545.svg'
 
-import { useQueryClient } from '@tanstack/react-query'
-import { useContext, useEffect, useRef, useState } from 'react'
-import { getNextTrack } from '../../../api/musicHooks/changeTrack'
-import { ThemeContext } from '../../../contextProviders/ThemeProvider'
-import { TracksContext } from '../../../contextProviders/trackBarProvider'
+import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setIsPlaiyng,
+  setNextTrack,
+} from '../../../redux/slicers/musicProcesses'
 import { Controls } from './controls/controls'
 import { ProgressBar } from './progressBar/progressBar'
 import { TrackInfo } from './trackInfo/trackInfo'
 import { VolumeBlock } from './volume/volume'
 
 function TrackBar(props) {
-  const { theme } = useContext(ThemeContext)
-
-  console.log('render')
-  const queryClient = useQueryClient()
-
-  const { currentTrackURL, setCurrentTrackURL } = useContext(TracksContext)
-
-  const mainPageTracks = queryClient.getQueryData(['allTracks'])
-
-  const favPageTracks = queryClient.getQueryData(['favTracks'])
-
-  const tracksData = mainPageTracks
-  // location === '/' && mainPageTracks !== undefined
-  //   ? mainPageTracks
-  //   : location === '/myTracks' && favPageTracks !== undefined
-  //   ? favPageTracks
-  //   : []
-
+  const dispatch = useDispatch()
+  const location = useLocation().pathname
+  const isVisible = useSelector((state) => state.music.trackBarIsVisible)
   const audioRef = useRef(null)
-
-  const [playNowTrackURL, setPlayNowTrackURL] = useState('')
-  const [isPlaying, setIsPlaying] = useState(false)
+  const isRepeat = useSelector((state) => state.music.isRepeat)
+  const trackUrl = useSelector((state) => state.music.currentTrackUrl)
+  const isPlay = useSelector((state) => state.music.isPlaiyng)
+  const [playNowTrackURL, setPlayNowTrackURL] = useState(null)
+  const [volumeValue, setVolumeValue] = useState(0.5)
 
   const playSong = () => {
     if (audioRef.current) {
       audioRef.current
         .play()
-        .then(() => {
-          setIsPlaying(true)
-          console.log('play')
-        })
+
         .catch((err) => {
           console.log('Error playing audio:', err)
         })
@@ -56,54 +43,59 @@ function TrackBar(props) {
     if (audioRef.current) {
       audioRef.current.pause()
     }
-    setIsPlaying(false)
-    console.log('pause')
   }
-
-  const click = (nextBackEvent, currentTrackURL, data) => {
-    getNextTrack(nextBackEvent, currentTrackURL, data, (nextTrack) => {
-      if (nextTrack) {
-        setCurrentTrackURL(nextTrack)
-        setPlayNowTrackURL(nextTrack)
-      }
-    })
+  useEffect(() => {
+    if (isPlay === false) {
+      pauseSong()
+    }
+  }, [isPlay])
+  //////////////---  playlistItemClick trigger the play
+  useEffect(() => {
+    setPlayNowTrackURL(trackUrl)
+    audioRef.current.load()
+  }, [trackUrl])
+  ///////////////
+  const endFn = () => {
+    if (isRepeat) {
+      dispatch(setNextTrack())
+    } else {
+      audioRef.currentTime = 0
+      playSong()
+    }
   }
 
   useEffect(() => {
-    if (currentTrackURL && currentTrackURL !== playNowTrackURL) {
-      setPlayNowTrackURL(currentTrackURL)
-
-      if (audioRef.current) {
-        audioRef.current.pause()
-        audioRef.current.load()
-      }
-    }
-  }, [currentTrackURL])
-
+    audioRef.current.volume = volumeValue
+  }, [volumeValue])
   return (
-    <div className={styles.bar}>
+    <div
+      className={`${styles.bar} ${isVisible ? styles.visible : styles.hidden}`}
+    >
       <audio
         ref={audioRef}
         src={playNowTrackURL}
         onLoadedData={(e) => {
           playSong()
         }}
+        onPlay={() => {
+          dispatch(setIsPlaiyng(true))
+        }}
+        onPause={() => {
+          dispatch(setIsPlaiyng(false))
+        }}
+        onEnded={endFn}
       />
-      <div className={`${styles.bar__content} ${styles[theme]}`}>
+      <div className={`${styles.bar__content} ${styles.dark}`}>
         <ProgressBar />
-        <div className={`${styles.bar__player_block} ${styles[theme]}`}>
+        <div className={`${styles.bar__player_block} ${styles.dark}`}>
           <div className={styles.bar__player}>
-            <Controls
-              play={playSong}
-              pause={pauseSong}
-              changeTrack={click}
-              data={tracksData}
-              isPlaying={isPlaying}
-              currentTrack={currentTrackURL}
-            />
+            <Controls pause={pauseSong} play={playSong} />
             <TrackInfo />
           </div>
-          <VolumeBlock />
+          <VolumeBlock
+            setVolumeValue={setVolumeValue}
+            volumeValue={volumeValue}
+          />
         </div>
       </div>
     </div>

@@ -1,21 +1,18 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
+import { useState } from 'react'
 
 export const logUser = () => {
-  const queryClient = useQueryClient()
+  const [errorData, setErrorData] = useState('')
 
-  const { mutate, data, isPending, isSuccess, isError } = useMutation({
+  const { mutate, data, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (body) => {
-      try {
-        const response = await axios.post(
-          'https://skypro-music-api.skyeng.tech/user/token/',
-          body
-        )
-        return response
-      } catch (error) {
-        throw error
-      }
+      const response = await axios.post(
+        'https://skypro-music-api.skyeng.tech/user/token/',
+        body
+      )
+      return response
     },
 
     onSuccess: (res) => {
@@ -27,10 +24,13 @@ export const logUser = () => {
         localStorage.setItem('userID', tokenData.user_id)
       }
     },
+    onError: (error) => {
+      setErrorData(error.response.data)
+    },
   })
 
   const handleLog = (body) => {
     mutate(body)
   }
-  return { handleLog, data, isPending, isSuccess, isError }
+  return { handleLog, data, isPending, isSuccess, isError, errorData }
 }

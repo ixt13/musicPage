@@ -1,11 +1,9 @@
-import { useContext, useState } from 'react'
-import { ThemeContext } from '../../../../contextProviders/ThemeProvider'
+import { useState } from 'react'
+
 import styles from './filter.module.scss'
 import FilterSelectBox from './filterSelectBox/filterSelectBox'
 
 function Filter(props) {
-  const { theme } = useContext(ThemeContext)
-
   const [subMenuIndex, setSubMenuIndex] = useState(0)
 
   const toggleSubMenu = (index) => {
@@ -20,7 +18,7 @@ function Filter(props) {
           onClick={() => {
             toggleSubMenu(1)
           }}
-          className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+          className={`${styles.filter__button} ${styles._btn_text} ${styles.dark} `}
         >
           артистам
         </button>
@@ -34,7 +32,7 @@ function Filter(props) {
           onClick={() => {
             toggleSubMenu(2)
           }}
-          className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+          className={`${styles.filter__button} ${styles._btn_text} ${styles.dark} `}
         >
           году
         </button>
@@ -47,7 +45,7 @@ function Filter(props) {
           onClick={() => {
             toggleSubMenu(3)
           }}
-          className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+          className={`${styles.filter__button} ${styles._btn_text} ${styles.dark} `}
         >
           жанру
         </button>
@@ -57,7 +55,7 @@ function Filter(props) {
         )}
       </div>
       <button
-        className={`${styles.filter__button} ${styles._btn_text} ${styles[theme]} `}
+        className={`${styles.filter__button} ${styles._btn_text} ${styles.dark} `}
       >
         reset
       </button>

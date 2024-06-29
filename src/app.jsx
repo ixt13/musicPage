@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider } from './contextProviders/ThemeProvider.jsx'
+import { Provider } from 'react-redux'
+import TrackBar from './UI/components/trackBar/trackBar.jsx'
+import store from './redux/store/reduxStore.jsx'
 import AppRoutes from './routes.jsx'
 
 function App() {
@@ -18,9 +20,10 @@ function App() {
   })
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
+      <Provider store={store}>
         <AppRoutes />
-      </ThemeProvider>
+        <TrackBar />
+      </Provider>
     </QueryClientProvider>
   )
 }

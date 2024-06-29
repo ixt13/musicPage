@@ -1,28 +1,44 @@
-import { useContext } from 'react'
-import { getAllTracksQuery } from '../../../api/musicHooks/getAllTracks'
-import { getFavsTracksQuery } from '../../../api/musicHooks/getFavTracks'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { setLikeTrack } from '../../../api/musicHooks/setLikeTrack'
-import { TracksContext } from '../../../contextProviders/trackBarProvider'
+import { useRemoveTrack } from '../../../api/userApi/deleteFromFav'
+import {
+  setMainPlaylist,
+  setSecondPlaylist,
+} from '../../../redux/slicers/musicProcesses'
 import PlayListItem from '../playListItem/playListItem'
 import styles from './tracksContainer.module.scss'
-export const TracksContainer = ({ page }) => {
-  const mainTracksQuery = getAllTracksQuery()
-  const favTracksQuery = getFavsTracksQuery()
+export const TracksContainer = ({ mainPlaylist, secondPlaylist, useFav }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation().pathname
 
-  const { setCurrentPage, setCurrentTrackID, setCurrentTrackURL } =
-    useContext(TracksContext)
+  const [tracksContainer, setTracksContainer] = useState([])
+
+  // if (location === '/myTracks' && useFav.isError) {
+  //   dispatch(setTrackBarIsVisible(false))
+  //   navigate('/login')
+  // }
 
   const { handleLike } = setLikeTrack()
+  const { deleteTrack } = useRemoveTrack()
+  /////////////////////-- set playlistContainer on switch page
+  useEffect(() => {
+    dispatch(setMainPlaylist(mainPlaylist))
+    dispatch(setSecondPlaylist(secondPlaylist))
+    if (location === '/' && mainPlaylist) {
+      setTracksContainer(mainPlaylist)
+    } else if (location === '/myTracks' && secondPlaylist) {
+      setTracksContainer(secondPlaylist)
+    }
+  }, [location, mainPlaylist, secondPlaylist])
+  //////////////////////--
 
   return (
     <>
       <div className={styles.TracksContainer}>
-        {(page === 'main' && mainTracksQuery.data
-          ? mainTracksQuery.data
-          : page === 'myTracks' && favTracksQuery.data
-          ? favTracksQuery.data
-          : []
-        ).map((track) => (
+        {tracksContainer.map((track) => (
           <PlayListItem
             key={track.id}
             name={track.name}
@@ -32,15 +48,8 @@ export const TracksContainer = ({ page }) => {
             genre={track.genre}
             release_date={track.release_date}
             stared_user={track.stared_user}
-            page={page}
-            like={() => {
-              handleLike(track.id)
-            }}
-            selectTrack={() => {
-              setCurrentPage(page)
-              setCurrentTrackID(track.id)
-              setCurrentTrackURL(track.track_file)
-            }}
+            trackUrl={track.track_file}
+            id={track.id}
           />
         ))}
       </div>

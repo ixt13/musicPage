@@ -1,26 +1,20 @@
 import cn from 'classnames'
-import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import themeDarkIcon from '../../../assets/icon/darkThemeIcon.svg'
-import themeLightIcon from '../../../assets/icon/lightThemeIcon.svg'
 import { ReactComponent as MenuIcon } from '../../../assets/icons/menu.svg'
-import { ThemeContext } from '../../../contextProviders/ThemeProvider'
+
+import { useDispatch } from 'react-redux'
+import { setTrackBarIsVisible } from '../../../redux/slicers/musicProcesses'
 import styles from './navMenu.module.css'
 function NavMenu() {
-  const logged = localStorage.getItem('username')
-  const { theme, toggleTheme } = useContext(ThemeContext)
-
+  const logged = localStorage.getItem('token')
+  const dispatch = useDispatch()
   function showHide() {
     const burgerMenu = document.getElementById('burger')
     burgerMenu.classList.toggle(styles.nav__menu)
   }
 
   return (
-    <nav
-      className={`${styles.main__nav} ${
-        theme === 'dark' ? styles.main__nav_Dark : styles.main__nav_Light
-      }  `}
-    >
+    <nav className={`${styles.main__nav} ${styles.main__nav_Dark}  `}>
       <div
         className={`${styles.nav__burger}  ${styles._btn}  `}
         onClick={showHide}
@@ -33,7 +27,7 @@ function NavMenu() {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                cn(styles._btn_text, styles[theme], {
+                cn(styles._btn_text, styles.dark, {
                   [styles.activeNavLink]: isActive,
                 })
               }
@@ -45,7 +39,7 @@ function NavMenu() {
             <NavLink
               to="/myTracks"
               className={({ isActive }) =>
-                cn(styles._btn_text, styles[theme], {
+                cn(styles._btn_text, styles.dark, {
                   [styles.activeNavLink]: isActive,
                 })
               }
@@ -55,15 +49,20 @@ function NavMenu() {
           </li>
           <li
             onClick={() => {
-              if (logged !== '') localStorage.removeItem('username')
-              localStorage.removeItem('token')
+              if (logged) {
+                dispatch(setTrackBarIsVisible(false))
+                localStorage.removeItem('token')
+                localStorage.removeItem('userID')
+              } else {
+                dispatch(setTrackBarIsVisible(false))
+              }
             }}
             className={styles.menu__item}
           >
             <NavLink
               to="/login"
               className={({ isActive }) =>
-                cn(styles._btn_text, styles[theme], {
+                cn(styles._btn_text, styles.dark, {
                   [styles.activeNavLink]: isActive,
                 })
               }
@@ -72,13 +71,6 @@ function NavMenu() {
             </NavLink>
           </li>
         </ul>
-        <div className={styles.icon}>
-          <img
-            src={theme === 'light' ? themeLightIcon : themeDarkIcon}
-            onClick={toggleTheme}
-            alt="themeIcon"
-          />
-        </div>
       </div>
     </nav>
   )

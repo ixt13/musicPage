@@ -32,5 +32,14 @@
   width: 100vw;
   background-color: #1a1a1a;
   position: fixed;
-  bottom: 0px;
+  bottom: -59px;
+
+  transition: all 350ms ease-in-out;
+}
+
+.visible {
+  transform: translateY(-59px);
+}
+.hidden {
+  transform: translateY(59px);
 }

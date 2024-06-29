@@ -1,10 +1,18 @@
-import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as IconLike } from '../../../assets/icons/like.svg'
-import { ReactComponent as TrackIcon } from '../../../assets/icons/trackIcon.svg'
-import { ThemeContext } from '../../../contextProviders/ThemeProvider'
-import { TracksContext } from '../../../contextProviders/trackBarProvider'
+import { ReactComponent as TrackIcon } from '../../../assets/icons/melody.svg'
+
+import { useLocation, useNavigate } from 'react-router-dom'
+import { setLikeTrack } from '../../../api/musicHooks/setLikeTrack'
+import { useRemoveTrack } from '../../../api/userApi/deleteFromFav'
 import { formatDuration } from '../../../hooks/fns'
+import {
+  setCurrentPlaylistTarget,
+  setCurrentTrackData,
+  setCurrentTrackUrl,
+  setIsLiked,
+  setTrackBarIsVisible,
+} from '../../../redux/slicers/musicProcesses'
 import styles from './playListItem.module.scss'
 
 function PlayListItem({
@@ -12,32 +20,77 @@ function PlayListItem({
   album,
   author,
   duration_in_seconds,
-  genre,
-  release_date,
-  like,
   stared_user,
-  page,
-  selectTrack,
+  trackUrl,
+  id,
 }) {
-  const { theme } = useContext(ThemeContext)
-  const { setPage } = useContext(TracksContext)
+  const navigate = useNavigate()
+  const currentTrackUrl = useSelector((state) => state.music.currentTrackUrl)
   const loggedUserID = localStorage.getItem('userID')
-
   const location = useLocation().pathname
-  const liked = (array, comp) => {
-    return array.find((el) => el.id === comp)
+  const dispatch = useDispatch()
+  const { deleteTrack, isSuccess, isError } = useRemoveTrack()
+  const { handleLike, data, error } = setLikeTrack()
+
+  if (isError || error) {
+    dispatch(setTrackBarIsVisible(false))
+    navigate('/login')
   }
 
+  const isLiked = () => {
+    const data = stared_user.find((el) => el.id === parseInt(loggedUserID))
+
+    if (data !== undefined) {
+      return true
+    }
+    return false
+  }
+  const setLocationPlaylist = () => {
+    if (location === '/') {
+      return 'main'
+    }
+    return 'fav'
+  }
+  const setTrackData = () => {
+    dispatch(setCurrentTrackUrl(trackUrl))
+    dispatch(setCurrentTrackData({ name: name, author: author, id: id }))
+    dispatch(setTrackBarIsVisible(true))
+    dispatch(setCurrentPlaylistTarget(setLocationPlaylist()))
+
+    if (location === '/') {
+      dispatch(setIsLiked(isLiked()))
+    } else {
+      dispatch(setIsLiked(true))
+    }
+  }
+
+  const handleLikeToggle = () => {
+    if (location === '/') {
+      if (isLiked()) {
+        deleteTrack(id)
+      } else {
+        handleLike(id)
+      }
+    } else {
+      deleteTrack(id)
+    }
+  }
   return (
     <div
-      className={styles.playlist__item}
+      className={`${styles.playlist__item} ${
+        currentTrackUrl === trackUrl ? styles.target : ''
+      } `}
       onClick={() => {
-        setPage(location)
-        selectTrack()
+        setTrackData()
       }}
     >
-      <TrackIcon className={styles.trackIcon} />
-
+      <div className={styles.trackImg}>
+        <TrackIcon
+          className={`${styles.melodySvg}  ${
+            currentTrackUrl === trackUrl ? styles.rotate_center : ''
+          }`}
+        />
+      </div>
       <div className={`${styles.track__title_text}  ${styles.pos}`}>{name}</div>
 
       <div className={`${styles.track__author} ${styles.pos}`}>{author}</div>
@@ -46,16 +99,14 @@ function PlayListItem({
 
       <div className={styles.track__time}>
         <IconLike
+          className={styles.likeIcon}
           onClick={(e) => {
             e.stopPropagation()
-            like()
+            handleLikeToggle()
           }}
-          className={styles.likeIcon}
           fill={
-            page === 'myTracks'
-              ? '#D3D3D3'
-              : liked(stared_user, Number(loggedUserID))
-              ? '#D3D3D3'
+            (location === '/' && isLiked()) || location === '/myTracks'
+              ? '#696969'
               : 'transparent'
           }
         />

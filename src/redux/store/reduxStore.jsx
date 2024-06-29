@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import userDataInfoSlice from '../slicers/userLogData'
-
+import musicDataSlice from '../slicers/musicProcesses.jsx'
 const store = configureStore({
   reducer: {
-    userData: userDataInfoSlice,
+    music: musicDataSlice,
   },
 })
-
 export default store

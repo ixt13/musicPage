@@ -1,21 +1,21 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
+import { useState } from 'react'
 
 export const regUser = () => {
-  const { mutate, data, isPending } = useMutation({
+  const [errorData, setErrorData] = useState('')
+
+  const { mutate, data, isPending, isError } = useMutation({
     mutationFn: async (body) => {
-      try {
-        const response = await axios.post(
-          'https://skypro-music-api.skyeng.tech/user/signup/',
-          body
-        )
-        return response
-      } catch (error) {
-        throw error
-      }
+      const response = await axios.post(
+        'https://skypro-music-api.skyeng.tech/user/signup/',
+        body
+      )
+      return response
     },
-    onSuccess: (data) => {
-      console.log(data)
+    onError: (error) => {
+      setErrorData(error.response.data)
+      console.log(error)
     },
   })
 
@@ -23,5 +23,5 @@ export const regUser = () => {
     mutate(body)
   }
 
-  return { handleSendForm, data }
+  return { handleSendForm, data, errorData, isError, isPending }
 }

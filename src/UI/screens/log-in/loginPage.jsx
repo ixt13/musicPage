@@ -6,26 +6,56 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logUser } from '../../../api/userApi/login'
 
+import IconBxLoaderCircle from '../../../assets/icons/IconBxLoaderCircle'
 function LoginForm() {
   const navigate = useNavigate()
 
+  const [loginPlaceHolder, setLoginPlacehoder] = useState('Логин')
+  const [passwordPlaceholder, setPasswordPlaceholder] = useState('Пароль')
+  const [errorInfo, setErrorInfo] = useState('')
   const [userLogin, setUserLogin] = useState('')
   const [userPassword, setUserPassword] = useState('')
+  const [isError, setIsError] = useState(false)
+
   const body = {
     email: userLogin,
     password: userPassword,
   }
 
-  const { data, handleLog, isPending, isSuccess, isError } = logUser()
+  const { handleLog, isPending, isSuccess, errorData } = logUser()
 
   useEffect(() => {
     if (isSuccess) {
       navigate('/')
     }
-    if (isError) {
-      console.log(isError)
+  }, [isSuccess])
+
+  useEffect(() => {
+    if (errorData) {
+      setIsError(true)
+      if (errorData.email && !userLogin.length) {
+        setLoginPlacehoder(errorData.email)
+      } else if (errorData.email && userLogin.length) {
+        setErrorInfo(errorData.email)
+      }
+      if (errorData.password && !userPassword.length) {
+        setPasswordPlaceholder(errorData.password)
+      } else if (errorData.password && userPassword.length) {
+        setErrorInfo(errorData.password)
+      }
+
+      if (errorData.detail) {
+        setErrorInfo(errorData.detail)
+      }
     }
-  }, [isSuccess, isError])
+  }, [errorData])
+
+  const resetErrors = () => {
+    setIsError(false)
+    setLoginPlacehoder('Логин')
+    setPasswordPlaceholder('Пароль')
+    setErrorInfo('')
+  }
 
   return (
     <div className={styles.login_form}>
@@ -41,35 +71,47 @@ function LoginForm() {
           <input
             onChange={(e) => {
               setUserLogin(e.target.value)
+              resetErrors()
             }}
-            className={styles.login_form_input_style}
+            className={`${styles.login_form_input_style}  ${
+              isError ? styles.errorTextContent : ''
+            }`}
             name="login"
             type="text"
-            placeholder="Логин"
+            placeholder={loginPlaceHolder}
             autoComplete="current-login"
           ></input>
 
           <input
             onChange={(e) => {
               setUserPassword(e.target.value)
+              resetErrors()
             }}
-            className={styles.login_form_input_style}
+            className={`${styles.login_form_input_style}  ${
+              isError ? styles.errorTextContent : ''
+            }`}
             name="password"
             type="password"
-            placeholder="Пароль"
+            placeholder={passwordPlaceholder}
             autoComplete="current-password"
           ></input>
         </div>
-
+        <div className={styles.errorContainer}>{errorInfo}</div>
         <div className={styles.login_buttons}>
           <button
             onClick={() => {
               handleLog(body)
             }}
             className={styles.login_login_button}
+            disabled={isPending}
           >
-            Войти
+            {isPending ? (
+              <IconBxLoaderCircle className={styles.loadingIcon} />
+            ) : (
+              'Войти'
+            )}
           </button>
+
           <button className={styles.login_reg_button}>
             <Link className={styles.buttonText} to="/registration">
               Зарегистрироваться
