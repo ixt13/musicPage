@@ -9,7 +9,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path={`${ghPagesPath}${'/'}`} element={<MainPage page="main" />} />
       <Route path={`${ghPagesPath}${'/login'}`} element={<LoginForm />} />
-      <Route path={`${ghPagesPath}${'/login'}`} element={<RegForm />} />
+      <Route path={`${ghPagesPath}${'/registration'}`} element={<RegForm />} />
 
       <Route
         path={`${ghPagesPath}${'/myTracks'}`}

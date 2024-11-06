@@ -114,7 +114,10 @@ function LoginForm() {
           </button>
 
           <button className={styles.login_reg_button}>
-            <Link className={styles.buttonText} to="/registration">
+            <Link
+              className={styles.buttonText}
+              to={`${ghPagesPath}${'/registration'}`}
+            >
               Зарегистрироваться
             </Link>
           </button>
